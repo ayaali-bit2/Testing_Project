@@ -1,4 +1,4 @@
-package StepDefination;
+package stepdefinition;
 
 import Hooks.Hook;
 import Pages.RegisterPage;
