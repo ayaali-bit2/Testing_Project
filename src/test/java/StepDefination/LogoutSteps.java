@@ -1,19 +1,19 @@
 package StepDefination;
 
-import Hooks.Hook;
+import utils.BaseTest;
 import Pages.LogoutPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LogoutSteps {
+public class LogoutSteps extends BaseTest {
 
     LogoutPage obj;
 
     @Given("User is on home page logout")
     public void checkHome(){
-        obj = new LogoutPage(Hook.driver);
+        obj = new LogoutPage(driver);
         obj.HomeCheck();
     }
 

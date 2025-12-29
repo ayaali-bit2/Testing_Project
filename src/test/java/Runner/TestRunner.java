@@ -1,14 +1,14 @@
 package Runner;
 
-import io.cucumber.testng.AbstractTestNGCucumberTests;
+import utils.BaseTest;
 import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
         features = "src/test/resources/Features/register.feature",
-        glue = {"StepDefination","Hooks"},
+        glue = {"StepDefination"},
         plugin = {"pretty", "html:target/cucumber-report.html"},
         monochrome = true
 )
-public class TestRunner extends AbstractTestNGCucumberTests {
+public class TestRunner extends BaseTest {
 }

@@ -1,6 +1,6 @@
 package StepDefination;
 
-import Hooks.Hook;
+
 import Pages.RegisterPage;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -12,14 +12,14 @@ import utils.BaseTest;
 
 import java.time.Duration;
 
-public class RegisterSteps {
+public class RegisterSteps extends BaseTest {
 
     RegisterPage obj;
 
 
     @Given("User is on home page")
     public void beginTest(){
-        obj = new RegisterPage(Hook.driver);
+        obj = new RegisterPage(driver);
         obj.HomeCheck();
     }
 

@@ -1,19 +1,19 @@
 package StepDefination;
 
-import Hooks.Hook;
+import utils.BaseTest;
 import Pages.LoginPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LoginSteps {
+public class LoginSteps extends BaseTest {
 
     LoginPage obj;
 
     @Given("User is on home page login")
     public void homecheck(){
-        obj = new LoginPage(Hook.driver);
+        obj = new LoginPage(driver);
         obj.HomeCheck();
     }
 
