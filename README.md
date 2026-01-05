@@ -52,17 +52,21 @@ mvn clean compile
 ├── README.md                   # Project documentation (this file)
 ├── src
 │   ├── main
-│   │   └── java/org/example
-│   │       └── Main.java       # Application entry point (empty scaffold)
+│   │   ├── java
+│   │   │   └── org/example
+│   │   │       └── Main.java       # Application entry point (empty scaffold)
+│   │   └── resources
+│   │       └── log4j2.xml          # Log4j2 configuration file
 │   └── test
 │       ├── java
-│       │   ├── Hooks           # Cucumber/TestNG hooks
-│       │   ├── Runner          # TestNG runner for Cucumber
-│       │   ├── Pages           # Page Object classes
-│       │   ├── StepDefination  # Step definition classes
-│       │   └── TestPages       # Test wrapper classes
+│       │   ├── Hooks               # Cucumber/TestNG hooks
+│       │   ├── Runner              # TestNG runner for Cucumber
+│       │   ├── Pages               # Page Object classes
+│       │   ├── StepDefination      # Step definition classes
+│       │   ├── utils               # Utility classes
+│       │   └── TestPages           # Test wrapper classes
 │       └── resources
-│           └── Features        # Cucumber feature files
+│           └── Features            # Cucumber feature files
 ├── testng.xml                  # TestNG suite configuration
 └── ...
 ```
