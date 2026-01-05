@@ -30,7 +30,7 @@ Feature: Register feature in automation exercise project
     Scenario: register with existing account
       Given User is on home page
       When user click signUpOrLogIn button
-      And enter username
-      And enter email
+      When enter username
+      When enter email
       And click on signUp button
       Then check Accounte is Existed Message
