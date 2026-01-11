@@ -1,25 +1,19 @@
 package StepDefination;
 
-import Hooks.Hook;
 import Pages.RegisterPage;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebDriver;
 import utils.BaseTest;
 
-import java.time.Duration;
+public class RegisterSteps extends BaseTest {
 
-public class RegisterSteps {
-
-    RegisterPage obj;
-
+    private RegisterPage obj;
 
     @Given("User is on home page")
     public void beginTest(){
-        obj = new RegisterPage(Hook.driver);
+        obj = new RegisterPage(driver);
         obj.HomeCheck();
     }
 
