@@ -1,326 +1,252 @@
 package Pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
+import org.testng.Assert;
 
 import java.time.Duration;
 
 public class RegisterWhileCheckoutCase {
 
-    WebDriver driver;
+    private WebDriver driver;
+    private WebDriverWait wait;
+    private Actions actions;
 
     public RegisterWhileCheckoutCase(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.actions = new Actions(driver);
     }
 
-    By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
+    // Page locators
+    private By homeHeader = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
+    private By firstProductImage = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(3) > div > div.single-products > div.productinfo.text-center > img");
+    private By firstProductOverlay = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(3) > div > div.single-products > div.product-overlay > div");
+    private By secondProductImage = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(4) > div > div.single-products > div.productinfo.text-center > img");
+    private By secondProductOverlay = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(4) > div > div.single-products > div.product-overlay > div");
+    private By continueShoppingButton = By.cssSelector(".modal-footer .btn-success");
+    private By cartHeaderButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(3) > a");
+    private By cartPageHeader = By.cssSelector("#cart_items > div > div.breadcrumbs > ol > li.active");
+    private By proceedToCheckoutButton = By.cssSelector("#do_action > div.container > div > div > a");
+    private By registerOrLoginLink = By.cssSelector("#checkoutModal > div > div > div.modal-body > p:nth-child(2) > a");
+    private By userNameField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=text]:nth-child(2)");
+    private By emailAddressField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=email]:nth-child(3)");
+    private By signUpButton = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > button");
+    private By genderMaleRadio = By.cssSelector("#id_gender1");
+    private By genderFemaleRadio = By.cssSelector("#id_gender2");
+    private By passwordField = By.cssSelector("#password");
+    private By dayDropdown = By.cssSelector("#days");
+    private By monthDropdown = By.cssSelector("#months");
+    private By yearDropdown = By.cssSelector("#years");
+    private By newsletterCheckbox = By.cssSelector("#newsletter");
+    private By specialOffersCheckbox = By.cssSelector("#optin");
+    private By firstNameField = By.cssSelector("#first_name");
+    private By lastNameField = By.cssSelector("#last_name");
+    private By companyField = By.cssSelector("#company");
+    private By addressLine1Field = By.cssSelector("#address1");
+    private By addressLine2Field = By.cssSelector("#address2");
+    private By countryDropdown = By.cssSelector("#country");
+    private By stateField = By.cssSelector("#state");
+    private By cityField = By.cssSelector("#city");
+    private By zipCodeField = By.cssSelector("#zipcode");
+    private By mobileNumberField = By.cssSelector("#mobile_number");
+    private By createAccountButton = By.cssSelector("#form > div > div > div > div.login-form > form > button");
+    private By newUserLabel = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(10) > a > b");
+    private By cartButtonAfterLogin = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(3) > a");
+    private By addressDetailsHeader = By.cssSelector("#cart_items > div > div:nth-child(2) > h2");
+    private By reviewOrderHeader = By.cssSelector("#cart_items > div > div:nth-child(4) > h2");
+    private By orderCommentsTextArea = By.cssSelector("#ordermsg > textarea");
+    private By placeOrderButton = By.cssSelector("#cart_items > div > div:nth-child(7) > a");
+    private By nameOnCardField = By.cssSelector("#payment-form > div:nth-child(2) > div > input");
+    private By cardNumberField = By.cssSelector("#payment-form > div:nth-child(3) > div > input");
+    private By cvcField = By.cssSelector("#payment-form > div:nth-child(4) > div.col-sm-4.form-group.cvc > input");
+    private By expirationMonthField = By.cssSelector("#payment-form > div:nth-child(4) > div:nth-child(2) > input");
+    private By expirationYearField = By.cssSelector("#payment-form > div:nth-child(4) > div:nth-child(3) > input");
+    private By payAndConfirmOrderButton = By.cssSelector("#submit");
+    private By successMessageLabel = By.cssSelector("#success_message > div");
+    private By deleteAccountLink = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(5) > a");
+    private By accountDeletedMessage = By.cssSelector("#form > div > div > div > h2 > b");
 
-    By selectFirstProduct = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(3) > div > div.single-products > div.productinfo.text-center > img");
-    By selectSecondProduct = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(4) > div > div.single-products > div.productinfo.text-center > img");
+    // Actions with explicit waits and assertions
 
-    By hoverOnFirstProduct = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(3) > div > div.single-products > div.product-overlay > div");
-    By hoverOnSecondProduct = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > div:nth-child(4) > div > div.single-products > div.product-overlay > div");
-
-    By continoueShopping = By.cssSelector(".modal-footer .btn-success");
-
-    By cartButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(3) > a");
-
-    By verifyCartPage = By.cssSelector("#cart_items > div > div.breadcrumbs > ol > li.active");
-
-    By procceedToCheckout = By.cssSelector("#do_action > div.container > div > div > a");
-
-    By registerORLogin = By.cssSelector("#checkoutModal > div > div > div.modal-body > p:nth-child(2) > a");
-
-    By userNameField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=text]:nth-child(2)");
-    By emailAddressField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=email]:nth-child(3)");
-
-    By signUpButton = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > button");
-
-
-    By Mr = By.cssSelector("##id_gender1");
-    By Mrs = By.cssSelector("#id_gender2");
-
-    By password = By.cssSelector("#password");
-
-    By dayDate = By.cssSelector("#days");
-    By monthDate = By.cssSelector("#months");
-    By yearDate = By.cssSelector("#years");
-
-    By newsLetter = By.cssSelector("#newsletter");
-    By specialOffers = By.cssSelector("#optin");
-
-    By firstName = By.cssSelector("#first_name");
-    By lastNmae = By.cssSelector("#last_name");
-
-    By companyName = By.cssSelector("#company");
-
-    By addressField = By.cssSelector("#address1");
-    By address2Field = By.cssSelector("#address2");
-
-    By contoryField = By.cssSelector("#country");
-
-    By stateField = By.cssSelector("#state");
-    By cityField = By.cssSelector("#city");
-    By zipCode = By.cssSelector("#zipcode");
-    By mobileNumber = By.cssSelector("#mobile_number");
-
-    By createAccountButton = By.cssSelector("#form > div > div > div > div.login-form > form > button");
-
-    By newUserSignUpVisible = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(10) > a > b");
-
-    By cartButtonHome = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(3) > a");
-
-    By addressDetails = By.cssSelector("#cart_items > div > div:nth-child(2) > h2");
-    By reviewYourOrder = By.cssSelector("#cart_items > div > div:nth-child(4) > h2");
-
-    By textArea = By.cssSelector("#ordermsg > textarea");
-    By placeOrder = By.cssSelector("#cart_items > div > div:nth-child(7) > a");
-
-    By nameOnCard = By.cssSelector("#payment-form > div:nth-child(2) > div > input");
-    By cardNumber = By.cssSelector("#payment-form > div:nth-child(3) > div > input");
-    By cvc = By.cssSelector("#payment-form > div:nth-child(4) > div.col-sm-4.form-group.cvc > input");
-    By expirationMonth = By.cssSelector("#payment-form > div:nth-child(4) > div:nth-child(2) > input");
-    By expirationYear = By.cssSelector("#payment-form > div:nth-child(4) > div:nth-child(3) > input");
-
-    By payAndConfirmOrder = By.cssSelector("#submit");
-
-    By successMessage = By.cssSelector("#success_message > div");
-
-    By delet = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(5) > a");
-
-    By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
-
-    public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+    public void verifyHomePageHeaderIsVisible() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(homeHeader)).isDisplayed(), "Home page header is not visible");
     }
 
-    public void clickOnAddToCartFirstProduct(){
-        WebElement elementToHover = driver.findElement(selectFirstProduct);
-
-        // Find the element to click (can be the same or revealed after hover)
-        WebElement elementToClick = driver.findElement(hoverOnFirstProduct);
-
-        // Create Actions instance
-        Actions actions = new Actions(driver);
-
-        // Perform hover and click
-        actions.moveToElement(elementToHover).perform();
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(hoverOnFirstProduct));
-//        elementToClick.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    public void addFirstProductToCart() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstProductImage));
+        actions.moveToElement(driver.findElement(firstProductImage)).perform();
+        WebElement overlay = wait.until(ExpectedConditions.elementToBeClickable(firstProductOverlay));
+        overlay.click();
     }
 
-    public void goTocontinoueShopping(){
-//        WebElement textField = driver.findElement(continoueShopping);
-//        textField.click();
-        //driver.switchTo().alert().accept();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-        // Wait until the modal is visible and the button is clickable
-        WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(continoueShopping));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", continueButton);
+    public void clickContinueShopping() {
+        wait.until(ExpectedConditions.elementToBeClickable(continueShoppingButton)).click();
     }
 
-    public void clickOnAddToCartSeconedProduct(){
-        WebElement elementToHover = driver.findElement(selectSecondProduct);
-
-        // Find the element to click (can be the same or revealed after hover)
-        WebElement elementToClick = driver.findElement(hoverOnSecondProduct);
-
-        // Create Actions instance
-        Actions actions = new Actions(driver);
-
-        // Perform hover and click
-        actions.moveToElement(elementToHover).perform();
-        elementToClick.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+    public void addSecondProductToCart() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(secondProductImage));
+        actions.moveToElement(driver.findElement(secondProductImage)).perform();
+        WebElement overlay = wait.until(ExpectedConditions.elementToBeClickable(secondProductOverlay));
+        overlay.click();
     }
 
-    public void goToCartPage(){
-        WebElement element = driver.findElement(cartButton);
-        String value = element.getAttribute("href");
-        driver.navigate().to(value);
+    public void navigateToCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(cartHeaderButton)).click();
     }
 
-    public void verifyCartPageFun(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+    public void verifyCartPageIsVisible() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(cartPageHeader)).isDisplayed(), "Cart page is not visible");
     }
 
-    public void ClickOnProcceedToCheckout(){
-        WebElement element = driver.findElement(procceedToCheckout);
-        String value = element.getAttribute("href");
-        driver.navigate().to(value);
+    public void clickProceedToCheckout() {
+        wait.until(ExpectedConditions.elementToBeClickable(proceedToCheckoutButton)).click();
     }
 
-    public void ClickOnRegisterORLogin(){
-        WebElement element = driver.findElement(registerORLogin);
-        String value = element.getAttribute("href");
-        driver.navigate().to(value);
+    public void clickRegisterOrLogin() {
+        wait.until(ExpectedConditions.elementToBeClickable(registerOrLoginLink)).click();
     }
 
-    public void setUserName(String userName) {
-        driver.findElement(userNameField).sendKeys(userName);
+    public void enterName(String name) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(userNameField)).sendKeys(name);
     }
 
-    public void setEmailAddress(String emailAddress) {
-        driver.findElement(emailAddressField).sendKeys(emailAddress);
+    public void enterEmailAddress(String email) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailAddressField)).sendKeys(email);
     }
 
-    public void setSignUpButton() {
-        driver.findElement(signUpButton).click();
+    public void clickSignUp() {
+        wait.until(ExpectedConditions.elementToBeClickable(signUpButton)).click();
     }
 
-    public void setMr() {
-        driver.findElement(Mr).click();
+    public void selectGenderMale() {
+        wait.until(ExpectedConditions.elementToBeClickable(genderMaleRadio)).click();
     }
 
-    public void setMrs() {
-        driver.findElement(Mrs).click();
+    public void selectGenderFemale() {
+        wait.until(ExpectedConditions.elementToBeClickable(genderFemaleRadio)).click();
     }
 
-    public void setPassword(String pass) {
-        driver.findElement(password).sendKeys(pass);
+    public void enterPassword(String pwd) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField)).sendKeys(pwd);
     }
 
-    public void setDayDate(String day) {
-        Select daySeletor = new Select(driver.findElement(dayDate));
-        daySeletor.selectByContainsVisibleText(day);
+    public void selectDateOfBirth(String day, String month, String year) {
+        new Select(wait.until(ExpectedConditions.elementToBeClickable(dayDropdown))).selectByVisibleText(day);
+        new Select(wait.until(ExpectedConditions.elementToBeClickable(monthDropdown))).selectByVisibleText(month);
+        new Select(wait.until(ExpectedConditions.elementToBeClickable(yearDropdown))).selectByVisibleText(year);
     }
 
-    public void setMonthDate(String month) {
-        Select daySeletor = new Select(driver.findElement(monthDate));
-        daySeletor.selectByContainsVisibleText(month);
+    public void optInForNewsletter() {
+        wait.until(ExpectedConditions.elementToBeClickable(newsletterCheckbox)).click();
     }
 
-    public void setYearDate(String year) {
-        Select daySeletor = new Select(driver.findElement(yearDate));
-        daySeletor.selectByContainsVisibleText(year);
+    public void optInForSpecialOffers() {
+        wait.until(ExpectedConditions.elementToBeClickable(specialOffersCheckbox)).click();
     }
 
-    public void setNewsLetter() {
-        driver.findElement(newsLetter).click();
+    public void enterFirstName(String firstName) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField)).sendKeys(firstName);
     }
 
-    public void setSpecialOffers() {
-        driver.findElement(specialOffers).click();
+    public void enterLastName(String lastName) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameField)).sendKeys(lastName);
     }
 
-    public void setFirstName(String fName) {
-        driver.findElement(firstName).sendKeys(fName);
+    public void enterCompany(String company) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(companyField)).sendKeys(company);
     }
 
-    public void setLastNmae(String lName) {
-        driver.findElement(lastNmae).sendKeys(lName);
+    public void enterAddressLine1(String address1) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(addressLine1Field)).sendKeys(address1);
     }
 
-    public void setCompanyName(String comName) {
-        driver.findElement(companyName).sendKeys(comName);
+    public void enterAddressLine2(String address2) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(addressLine2Field)).sendKeys(address2);
     }
 
-    public void setAddressField(String addressText) {
-        driver.findElement(addressField).sendKeys(addressText);
+    public void selectCountry(String country) {
+        new Select(wait.until(ExpectedConditions.elementToBeClickable(countryDropdown))).selectByVisibleText(country);
     }
 
-    public void setAddress2Field(String address2Text) {
-        driver.findElement(address2Field).sendKeys(address2Text);
+    public void enterState(String state) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(stateField)).sendKeys(state);
     }
 
-    public void setContoryField(String contoryFi) {
-        Select selector = new Select(driver.findElement(contoryField));
-        selector.selectByContainsVisibleText(contoryFi);
+    public void enterCity(String city) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cityField)).sendKeys(city);
     }
 
-    public void setStateField(String stateFi) {
-        driver.findElement(stateField).sendKeys(stateFi);
+    public void enterZipCode(String zip) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(zipCodeField)).sendKeys(zip);
     }
 
-    public void setCityField(String cityFi) {
-        driver.findElement(cityField).sendKeys(cityFi);
+    public void enterMobileNumber(String mobile) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(mobileNumberField)).sendKeys(mobile);
     }
 
-    public void setZipCode(String zipCodefi) {
-        driver.findElement(zipCode).sendKeys(zipCodefi);
+    public void clickCreateAccount() {
+        wait.until(ExpectedConditions.elementToBeClickable(createAccountButton)).click();
     }
 
-    public void setMobileNumber(String mobileNumberText) {
-        driver.findElement(mobileNumber).sendKeys(mobileNumberText);
+    public void verifyNewUserAccountCreated() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(newUserLabel)).isDisplayed(), "New user account creation label is not visible");
     }
 
-    public void setCreateAccountButton() {
-        driver.findElement(createAccountButton).click();
+    public void navigateToCartAfterLogin() {
+        wait.until(ExpectedConditions.elementToBeClickable(cartButtonAfterLogin)).click();
     }
 
-    public void verifyNewUserCreated(){
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+    public void verifyAddressDetailsSection() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(addressDetailsHeader)).isDisplayed(), "Address details section is not visible");
     }
 
-    public void clickOnCartButton(){
-        WebElement element = driver.findElement(cartButtonHome);
-        String value = element.getAttribute("href");
-        driver.navigate().to(value);
+    public void verifyReviewYourOrderSection() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(reviewOrderHeader)).isDisplayed(), "Review your order section is not visible");
     }
 
-    public void verifyAddressDetails(){
-        System.out.println(driver.findElement(addressDetails).isDisplayed());
+    public void enterOrderComments(String comments) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(orderCommentsTextArea)).sendKeys(comments);
     }
 
-    public void verifyReviewYourOrder(){
-        System.out.println(driver.findElement(reviewYourOrder).isDisplayed());
+    public void clickPlaceOrder() {
+        wait.until(ExpectedConditions.elementToBeClickable(placeOrderButton)).click();
     }
 
-    public void writeCommentInTextArea(String text){
-        driver.findElement(textArea).sendKeys(text);
+    public void enterCardName(String name) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameOnCardField)).sendKeys(name);
     }
 
-    public void clickOnPlaceOrder(){
-        driver.findElement(placeOrder).click();
+    public void enterCardNumber(String cardNumber) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cardNumberField)).sendKeys(cardNumber);
     }
 
-    public void setNameOnCard(String name) {
-        driver.findElement(nameOnCard).sendKeys(name);
+    public void enterCvc(String cvc) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cvcField)).sendKeys(cvc);
     }
 
-    public void setCardNumber(String number) {
-        driver.findElement(cardNumber).sendKeys(number);
+    public void enterExpirationMonth(String month) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(expirationMonthField)).sendKeys(month);
     }
 
-    public void setCvc(String cvctext) {
-        driver.findElement(cvc).sendKeys(cvctext);
+    public void enterExpirationYear(String year) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(expirationYearField)).sendKeys(year);
     }
 
-    public void setExpirationMonth(String month) {
-        driver.findElement(expirationMonth).sendKeys(month);
+    public void clickPayAndConfirmOrder() {
+        wait.until(ExpectedConditions.elementToBeClickable(payAndConfirmOrderButton)).click();
     }
 
-    public void setExpirationYear(String year) {
-        driver.findElement(expirationYear).sendKeys(year);
+    public void verifyOrderSuccessMessage() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(successMessageLabel)).isDisplayed(), "Order success message is not visible");
     }
 
-    public void clickOnPayAndConfirmOrder(){
-        driver.findElement(payAndConfirmOrder).click();
+    public void clickDeleteAccount() {
+        wait.until(ExpectedConditions.elementToBeClickable(deleteAccountLink)).click();
     }
 
-    public void checkSuccessMessage(){
-        System.out.println(driver.findElement(successMessage).isDisplayed());
+    public void verifyAccountDeletedMessage() {
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(accountDeletedMessage)).isDisplayed(), "Account deleted message is not visible");
     }
-
-    public void clickOnDelete(){
-        driver.findElement(delet).click();
-    }
-
-    public void verifyCheckDeleted(){
-        System.out.println(driver.findElement(checkDeleted).isDisplayed());
-    }
-
 }
