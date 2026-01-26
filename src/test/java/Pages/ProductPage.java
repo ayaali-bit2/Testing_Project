@@ -23,7 +23,6 @@ public class ProductPage {
     private By productsPageHeader = By.xpath("/html/body/section[2]/div/div/div[2]/div/h2");
     private By productsListSection = By.xpath("/html/body/section[2]/div/div/div[2]");
     private By viewProductLink = By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[2]/ul/li/a");
-    private By productDetailsHeader = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/h2");
     private By productName = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/h2");
     private By productCategory = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[1]");
     private By productPrice = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/span/span");
@@ -61,8 +60,8 @@ public class ProductPage {
     }
 
     public void verifyProductDetailsPageDisplayed() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productDetailsHeader));
-        Assert.assertTrue(driver.findElement(productDetailsHeader).isDisplayed(), "Product details header is not displayed");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productName));
+        Assert.assertTrue(driver.findElement(productName).isDisplayed(), "Product details header is not displayed");
     }
 
     public void verifyFirstProductDetails() {
