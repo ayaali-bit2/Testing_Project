@@ -31,16 +31,16 @@ public class ProductWithCart {
 
     By viewCartLink = By.xpath("(//a[@href=\"/view_cart\"])[2]");
 
-    By firstProductAddedToCart = By.cssSelector("#product-1 > td.cart_description > p");
-    By secondProductAddedToCart = By.cssSelector("#product-2 > td.cart_description > h4 > a");
+    By firstProductAddedToCart = By.xpath("//*[@id='product-1']/td[@class='cart_description']/p");
+    By secondProductAddedToCart = By.xpath("//*[@id='product-2']/td[@class='cart_description']/h4/a");
 
-    By firstProductPriceInCartPage = By.cssSelector("#product-1 > td.cart_price > p");
-    By firstProductQuantityInCartPage = By.cssSelector("#product-1 > td.cart_quantity > button");
-    By firstProductTotalPriceInCartPage = By.cssSelector("#product-1 > td.cart_total > p");
+    By firstProductPriceInCartPage = By.xpath("//*[@id='product-1']/td[@class='cart_price']/p");
+    By firstProductQuantityInCartPage = By.xpath("//*[@id='product-1']/td[@class='cart_quantity']/button");
+    By firstProductTotalPriceInCartPage = By.xpath("//*[@id='product-1']/td[@class='cart_total']/p");
 
-    By seconedProductPriceInCartPage = By.cssSelector("#product-2 > td.cart_price > p");
-    By seconedProductQuantityInCartPage = By.cssSelector("#product-2 > td.cart_quantity > button");
-    By seconedProductTotalPriceInCartPage = By.cssSelector("#product-2 > td.cart_total > p");
+    By seconedProductPriceInCartPage = By.xpath("//*[@id='product-2']/td[@class='cart_price']/p");
+    By seconedProductQuantityInCartPage = By.xpath("//*[@id='product-2']/td[@class='cart_quantity']/button");
+    By seconedProductTotalPriceInCartPage = By.xpath("//*[@id='product-2']/td[@class='cart_total']/p");
 
     By hoverProductFromHome = By.xpath("//img[@src=\"/get_product_picture/2\"]");
     By clickAddToCartHome = By.xpath("(//a[@data-product-id=\"2\"])[2]");
