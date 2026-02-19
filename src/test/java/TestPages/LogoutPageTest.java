@@ -1,7 +1,6 @@
 package TestPages;
 
 import Pages.LogoutPage;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 import utils.BaseTest;
 
@@ -21,13 +20,10 @@ public class LogoutPageTest extends BaseTest {
 
         obj.NewUserSignUpVisible();
 
-        obj.setEmailAddressField("ayaali@gmail.com");
-        obj.setPasswordField("123456789");
-
-        obj.setSignUpButton();
+        obj.logIn("ayaali@gmail.com", "123456789");
         obj.checkUserNameBar();
 
-        obj.logoutButtonFun();
+        obj.logOut();
 
         obj.NewUserSignUpVisible();
 

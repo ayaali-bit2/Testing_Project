@@ -14,9 +14,7 @@ public class LoginPageTest extends BaseTest {
 //        obj = new LoginPage(driver);
 //        obj.HomeCheck();
 //        obj.SingInAndSignUpButton();
-//        obj.setEmailAddressField("ayaali@gmail.com");
-//        obj.setPasswordField("123456789");
-//        obj.setSignUpButton();
+//        obj.logIn("ayaali@gmail.com", "123456789");
 //        obj.checkUserNameBar();
 //        obj.deleteButton();
 //        obj.checkIsDeleted();
@@ -27,9 +25,7 @@ public class LoginPageTest extends BaseTest {
         obj = new LoginPage(driver);
         obj.HomeCheck();
         obj.SingInAndSignUpButton();
-        obj.setEmailAddressField("ayaal@gmail.com");
-        obj.setPasswordField("12345679");
-        obj.setSignUpButton();
+        obj.logIn("ayaal@gmail.com", "12345679");
 
 //        obj.checkUserNameBar();
 //        obj.deleteButton();
