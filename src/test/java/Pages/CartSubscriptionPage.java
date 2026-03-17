@@ -1,53 +1,42 @@
 package Pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
-public class CartSubscriptionPage {
+public class CartSubscriptionPage extends BasePage {
 
-    WebDriver driver;
+    private final By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
+    private final By cartButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(3) > a");
+    private final By verifySubscription = By.cssSelector("#footer > div.footer-widget > div > div > div.col-sm-3.col-sm-offset-1 > div > h2");
+    private final By emailVerification = By.cssSelector("#susbscribe_email");
+    private final By submitButtonVerification = By.cssSelector("#subscribe");
+    private final By successMessage = By.cssSelector("#success-subscribe > div");
 
     public CartSubscriptionPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
-
-    By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
-
-    By cartButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(3) > a");
-
-    By verifySubscription = By.cssSelector("#footer > div.footer-widget > div > div > div.col-sm-3.col-sm-offset-1 > div > h2");
-    By emailVerication = By.cssSelector("#susbscribe_email");
-    By submitButtonVerication = By.cssSelector("#subscribe");
-
-
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        findElement(homeCheck);
+        logger.info("Home section is visible");
     }
 
-    public void clickOnCartButton(){
-        WebElement element = driver.findElement(cartButton);
-        String value = element.getAttribute("href");
-        driver.navigate().to(value);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-
-    }
-    public void verifySubscriptionFun(){
-        System.out.println(driver.findElement(verifySubscription).isDisplayed());
+    public void clickOnCartButton() {
+        navigateToHref(cartButton, "navigate to cart page");
     }
 
-    public void setEmailVerication(String email){
-        driver.findElement(emailVerication).sendKeys(email);
+    public void verifySubscriptionFun() {
+        findElement(verifySubscription);
+        logger.info("Subscription section is visible");
     }
 
-    public void clickOnSubmitButtonVerication(){
-        driver.findElement(submitButtonVerication).click();
+    public void setEmailVerication(String email) {
+        type(emailVerification, email);
+    }
 
-        System.out.println(driver.findElement(By.cssSelector("#success-subscribe > div")).isDisplayed());
-
-//        driver.findElement(submitButtonVerication).click();
+    public void clickOnSubmitButtonVerication() {
+        click(submitButtonVerification);
+        findElement(successMessage);
+        logger.info("Subscription success message is visible");
     }
 }

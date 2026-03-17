@@ -2,198 +2,170 @@ package Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Test;
-import utils.BaseTest;
 
-import java.time.Duration;
+public class RegisterPage extends BasePage {
 
-public class RegisterPage  {
-
-    WebDriver driver;
+    private final By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
+    private final By singInAndSignUpButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
+    private final By newUserSignUpVisible = By.cssSelector("#form > div > div > div:nth-child(3) > div > h2");
+    private final By userNameField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=text]:nth-child(2)");
+    private final By emailAddressField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=email]:nth-child(3)");
+    private final By signupBtn = By.xpath("//button[@data-qa=\"signup-button\"]");
+    private final By enterAccountInformation = By.cssSelector("#form > div > div > div > div.login-form > h2 > b");
+    private final By mr = By.cssSelector("#id_gender1");
+    private final By mrs = By.cssSelector("#id_gender2");
+    private final By password = By.cssSelector("#password");
+    private final By dayDate = By.cssSelector("#days");
+    private final By monthDate = By.cssSelector("#months");
+    private final By yearDate = By.cssSelector("#years");
+    private final By newsletter = By.cssSelector("#newsletter");
+    private final By specialOffers = By.cssSelector("#optin");
+    private final By firstName = By.cssSelector("#first_name");
+    private final By lastName = By.cssSelector("#last_name");
+    private final By companyName = By.cssSelector("#company");
+    private final By addressField = By.cssSelector("#address1");
+    private final By address2Field = By.cssSelector("#address2");
+    private final By countryField = By.cssSelector("#country");
+    private final By stateField = By.cssSelector("#state");
+    private final By cityField = By.cssSelector("#city");
+    private final By zipCode = By.cssSelector("#zipcode");
+    private final By mobileNumber = By.cssSelector("#mobile_number");
+    private final By createAccountButton = By.cssSelector("#form > div > div > div > div.login-form > form > button");
+    private final By alreadyExistedUser = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > p");
+    private final By verifyAccountCreated = By.cssSelector("#form > div > div > div > h2 > b");
+    private final By continueButton = By.cssSelector("#form > div > div > div > div > a");
 
     public RegisterPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-
-    By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
-
-    By singInAndSignUpButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
-    By newUserSignUpVisible = By.cssSelector("#form > div > div > div:nth-child(3) > div > h2");
-
-    By userNameField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=text]:nth-child(2)");
-    By emailAddressField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=email]:nth-child(3)");
-
-    By signupBtn = By.xpath("//button[@data-qa=\"signup-button\"]");
-    By enterAccountInformation = By.cssSelector("#form > div > div > div > div.login-form > h2 > b");
-
-
-    By Mr = By.cssSelector("##id_gender1");
-    By Mrs = By.cssSelector("#id_gender2");
-
-    By password = By.cssSelector("#password");
-
-    By dayDate = By.cssSelector("#days");
-    By monthDate = By.cssSelector("#months");
-    By yearDate = By.cssSelector("#years");
-
-    By newsLetter = By.cssSelector("#newsletter");
-    By specialOffers = By.cssSelector("#optin");
-
-    By firstName = By.cssSelector("#first_name");
-    By lastNmae = By.cssSelector("#last_name");
-
-    By companyName = By.cssSelector("#company");
-
-    By addressField = By.cssSelector("#address1");
-    By address2Field = By.cssSelector("#address2");
-
-    By contoryField = By.cssSelector("#country");
-
-    By stateField = By.cssSelector("#state");
-    By cityField = By.cssSelector("#city");
-    By zipCode = By.cssSelector("#zipcode");
-    By mobileNumber = By.cssSelector("#mobile_number");
-
-    By createAccountButton = By.cssSelector("#form > div > div > div > div.login-form > form > button");
-
-    By alreadyExistedUser = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > p");
-
-    By verifyAccountCreated = By.cssSelector("#form > div > div > div > h2 > b");
-
-    By continueButtin = By.cssSelector("#form > div > div > div > div > a");
-
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        findElement(homeCheck);
+        logger.info("Home section is visible");
     }
 
     public void SingInAndSignUpButton() {
-        WebElement textField = driver.findElement(singInAndSignUpButton);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+        navigateToHref(singInAndSignUpButton, "navigate to Sign In and Sign Up page");
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        findElement(newUserSignUpVisible);
+        logger.info("New user sign-up section is visible");
     }
 
     public void setUserName(String userName) {
-        driver.findElement(userNameField).sendKeys(userName);
+        type(userNameField, userName);
     }
 
     public void setEmailAddress(String emailAddress) {
-        driver.findElement(emailAddressField).sendKeys(emailAddress);
+        type(emailAddressField, emailAddress);
     }
 
     public void setSignUpButton() {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement element = wait.until(
-//                ExpectedConditions.elementToBeClickable(signupBtn));
-//        element.click();
-
-        driver.findElement(signupBtn).click();
+        click(signupBtn);
     }
 
     public void setEnterAccountInformation() {
-        System.out.println(driver.findElement(enterAccountInformation).isDisplayed());
+        findElement(enterAccountInformation);
+        logger.info("Enter account information section is visible");
     }
 
     public void setMr() {
-        driver.findElement(Mr).click();
+        click(mr);
     }
 
     public void setMrs() {
-        driver.findElement(Mrs).click();
+        click(mrs);
     }
 
     public void setPassword(String pass) {
-        driver.findElement(password).sendKeys(pass);
+        type(password, pass);
     }
 
     public void setDayDate(String day) {
-        Select daySeletor = new Select(driver.findElement(dayDate));
-        daySeletor.selectByContainsVisibleText(day);
+        Select daySelector = new Select(findElement(dayDate));
+        daySelector.selectByVisibleText(day);
+        logger.info("Selected day {}", day);
     }
 
     public void setMonthDate(String month) {
-        Select daySeletor = new Select(driver.findElement(monthDate));
-        daySeletor.selectByContainsVisibleText(month);
+        Select monthSelector = new Select(findElement(monthDate));
+        monthSelector.selectByVisibleText(month);
+        logger.info("Selected month {}", month);
     }
 
     public void setYearDate(String year) {
-        Select daySeletor = new Select(driver.findElement(yearDate));
-        daySeletor.selectByContainsVisibleText(year);
+        Select yearSelector = new Select(findElement(yearDate));
+        yearSelector.selectByVisibleText(year);
+        logger.info("Selected year {}", year);
     }
 
     public void setNewsLetter() {
-        driver.findElement(newsLetter).click();
+        click(newsletter);
     }
 
     public void setSpecialOffers() {
-        driver.findElement(specialOffers).click();
+        click(specialOffers);
     }
 
     public void setFirstName(String fName) {
-        driver.findElement(firstName).sendKeys(fName);
+        type(firstName, fName);
     }
 
     public void setLastNmae(String lName) {
-        driver.findElement(lastNmae).sendKeys(lName);
+        type(lastName, lName);
     }
 
     public void setCompanyName(String comName) {
-        driver.findElement(companyName).sendKeys(comName);
+        type(companyName, comName);
     }
 
     public void setAddressField(String addressText) {
-        driver.findElement(addressField).sendKeys(addressText);
+        type(addressField, addressText);
     }
 
     public void setAddress2Field(String address2Text) {
-        driver.findElement(address2Field).sendKeys(address2Text);
+        type(address2Field, address2Text);
     }
 
     public void setContoryField(String contoryFi) {
-        Select selector = new Select(driver.findElement(contoryField));
-        selector.selectByContainsVisibleText(contoryFi);
+        Select selector = new Select(findElement(countryField));
+        selector.selectByVisibleText(contoryFi);
+        logger.info("Selected country {}", contoryFi);
     }
 
     public void setStateField(String stateFi) {
-        driver.findElement(stateField).sendKeys(stateFi);
+        type(stateField, stateFi);
     }
 
     public void setCityField(String cityFi) {
-        driver.findElement(cityField).sendKeys(cityFi);
+        type(cityField, cityFi);
     }
 
     public void setZipCode(String zipCodefi) {
-        driver.findElement(zipCode).sendKeys(zipCodefi);
+        type(zipCode, zipCodefi);
     }
 
     public void setMobileNumber(String mobileNumberText) {
-        driver.findElement(mobileNumber).sendKeys(mobileNumberText);
+        type(mobileNumber, mobileNumberText);
     }
 
     public void setCreateAccountButton() {
-        driver.findElement(createAccountButton).click();
+        click(createAccountButton);
     }
 
-    public void registerWithExistedUser(){
-        driver.findElement(alreadyExistedUser).isDisplayed();
+    public void registerWithExistedUser() {
+        findElement(alreadyExistedUser);
+        logger.info("Existing user warning is visible");
     }
 
-    public void verifyAccountCreatedFun(){
-        System.out.println(driver.findElement(verifyAccountCreated).isDisplayed());
+    public void verifyAccountCreatedFun() {
+        findElement(verifyAccountCreated);
+        logger.info("Account creation confirmation is visible");
     }
 
-    public void clickOnContinueButton(){
-        WebElement textField = driver.findElement(continueButtin);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+    public void clickOnContinueButton() {
+        navigateToHref(continueButton, "continue to next step");
     }
 }

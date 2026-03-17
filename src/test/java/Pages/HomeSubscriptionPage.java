@@ -3,39 +3,35 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+public class HomeSubscriptionPage extends BasePage {
 
-public class HomeSubscriptionPage {
-
-    WebDriver driver;
+    private final By homeCheck = By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[1]/a");
+    private final By verifySubscription = By.xpath("//*[@id=\"footer\"]/div[1]/div/div/div[2]/div/h2");
+    private final By emailVerification = By.xpath("//*[@id=\"susbscribe_email\"]");
+    private final By submitButtonVerification = By.xpath("//*[@id=\"subscribe\"]");
+    private final By successMessage = By.cssSelector("#success-subscribe > div");
 
     public HomeSubscriptionPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
-
-    By homeCheck = By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[1]/a");
-
-
-    By verifySubscription = By.xpath("//*[@id=\"footer\"]/div[1]/div/div/div[2]/div/h2");
-    By emailVerication = By.xpath("//*[@id=\"susbscribe_email\"]");
-    By submitButtonVerication = By.xpath("//*[@id=\"subscribe\"]");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        findElement(homeCheck);
+        logger.info("Home section is visible");
     }
 
-    public void verifySubscriptionFun(){
-        System.out.println(driver.findElement(verifySubscription).isDisplayed());
+    public void verifySubscriptionFun() {
+        findElement(verifySubscription);
+        logger.info("Subscription section is visible");
     }
 
-    public void setEmailVerication(String email){
-        driver.findElement(emailVerication).sendKeys(email);
+    public void setEmailVerication(String email) {
+        type(emailVerification, email);
     }
 
-    public void clickOnSubmitButtonVerication(){
-        driver.findElement(submitButtonVerication).click();
-
-        System.out.println(driver.findElement(By.cssSelector("#success-subscribe > div")).isDisplayed());
-
-//        driver.findElement(submitButtonVerication).click();
+    public void clickOnSubmitButtonVerication() {
+        click(submitButtonVerification);
+        findElement(successMessage);
+        logger.info("Subscription success message is visible");
     }
 }
