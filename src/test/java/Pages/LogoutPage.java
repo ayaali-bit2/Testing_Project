@@ -3,6 +3,7 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class LogoutPage {
 
@@ -28,7 +29,7 @@ public class LogoutPage {
     By logoutButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Featured items section should be visible on the home page.");
     }
 
     public void SingInAndSignUpButton() {
@@ -38,7 +39,7 @@ public class LogoutPage {
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "New user signup prompt should be present on the logout page.");
     }
 
     public void setEmailAddressField(String emailAddressFieldtext) {
@@ -54,7 +55,7 @@ public class LogoutPage {
     }
 
     public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+        Assert.assertTrue(driver.findElement(usernameInBar).isDisplayed(), "Username bar should remain visible for verification on the logout page.");
     }
 
     public void logoutButtonFun() {

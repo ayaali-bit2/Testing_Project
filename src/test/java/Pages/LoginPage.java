@@ -3,6 +3,7 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class LoginPage {
 
@@ -19,7 +20,6 @@ public class LoginPage {
     By emailAddressField = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > input[type=email]:nth-child(2)");
     By passwordField = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > input[type=password]:nth-child(3)");
 
-
     By signUpButton = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > button");
 
     By usernameInBar = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(10) > a > b");
@@ -29,9 +29,8 @@ public class LoginPage {
 
     By InvalidLoginMessage = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > p");
 
-
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Featured items section should be visible on the home page.");
     }
 
     public void SingInAndSignUpButton() {
@@ -53,7 +52,7 @@ public class LoginPage {
     }
 
     public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+        Assert.assertTrue(driver.findElement(usernameInBar).isDisplayed(), "Username bar should be displayed after logging in.");
     }
 
     public void deleteButton() {
@@ -63,12 +62,10 @@ public class LoginPage {
     }
 
     public void checkIsDeleted(){
-        driver.findElement(checkDeleted).isDisplayed();
+        Assert.assertTrue(driver.findElement(checkDeleted).isDisplayed(), "Deletion confirmation should be visible after deleting an account.");
     }
 
     public void checkInValidLoginMessageVisability(){
-        driver.findElement(InvalidLoginMessage).isDisplayed();
+        Assert.assertTrue(driver.findElement(InvalidLoginMessage).isDisplayed(), "An invalid login message should appear when credentials are incorrect.");
     }
-
-
 }
