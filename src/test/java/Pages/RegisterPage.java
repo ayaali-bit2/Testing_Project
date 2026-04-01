@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 import utils.BaseTest;
 
 import java.time.Duration;
@@ -69,7 +70,7 @@ public class RegisterPage  {
     By continueButtin = By.cssSelector("#form > div > div > div > div > a");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Homepage feature section should be visible");
     }
 
     public void SingInAndSignUpButton() {
@@ -79,7 +80,7 @@ public class RegisterPage  {
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "New user signup heading should be visible");
     }
 
     public void setUserName(String userName) {
@@ -100,7 +101,7 @@ public class RegisterPage  {
     }
 
     public void setEnterAccountInformation() {
-        System.out.println(driver.findElement(enterAccountInformation).isDisplayed());
+        Assert.assertTrue(driver.findElement(enterAccountInformation).isDisplayed(), "Account information section should be rendered");
     }
 
     public void setMr() {
@@ -184,11 +185,11 @@ public class RegisterPage  {
     }
 
     public void registerWithExistedUser(){
-        driver.findElement(alreadyExistedUser).isDisplayed();
+        Assert.assertTrue(driver.findElement(alreadyExistedUser).isDisplayed(), "Existing user warning should appear");
     }
 
     public void verifyAccountCreatedFun(){
-        System.out.println(driver.findElement(verifyAccountCreated).isDisplayed());
+        Assert.assertTrue(driver.findElement(verifyAccountCreated).isDisplayed(), "Account created confirmation should be visible");
     }
 
     public void clickOnContinueButton(){

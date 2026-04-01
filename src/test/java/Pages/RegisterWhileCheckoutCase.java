@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 
@@ -97,7 +98,7 @@ public class RegisterWhileCheckoutCase {
     By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Homepage feature title should be visible");
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -154,7 +155,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCartPageFun(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        Assert.assertTrue(driver.findElement(verifyCartPage).isDisplayed(), "Cart breadcrumbs should appear on the cart page");
     }
 
     public void ClickOnProcceedToCheckout(){
@@ -262,7 +263,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyNewUserCreated(){
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "New user signup banner should appear");
     }
 
     public void clickOnCartButton(){
@@ -272,11 +273,11 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyAddressDetails(){
-        System.out.println(driver.findElement(addressDetails).isDisplayed());
+        Assert.assertTrue(driver.findElement(addressDetails).isDisplayed(), "Address details section should show on checkout");
     }
 
     public void verifyReviewYourOrder(){
-        System.out.println(driver.findElement(reviewYourOrder).isDisplayed());
+        Assert.assertTrue(driver.findElement(reviewYourOrder).isDisplayed(), "Review Your Order heading should be displayed");
     }
 
     public void writeCommentInTextArea(String text){
@@ -312,7 +313,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void checkSuccessMessage(){
-        System.out.println(driver.findElement(successMessage).isDisplayed());
+        Assert.assertTrue(driver.findElement(successMessage).isDisplayed(), "Order success message should be displayed");
     }
 
     public void clickOnDelete(){
@@ -320,7 +321,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCheckDeleted(){
-        System.out.println(driver.findElement(checkDeleted).isDisplayed());
+        Assert.assertTrue(driver.findElement(checkDeleted).isDisplayed(), "Account deletion confirmation should be visible");
     }
 
 }
