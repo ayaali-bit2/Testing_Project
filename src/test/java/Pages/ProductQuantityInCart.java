@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class ProductQuantityInCart {
+
+    private static final Logger logger = LogManager.getLogger(ProductQuantityInCart.class);
 
     WebDriver driver;
 
@@ -32,7 +36,8 @@ public class ProductQuantityInCart {
     By quantityOfProductInCart = By.cssSelector("#product-1 > td.cart_quantity > button");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean homeLinkVisible = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home check link displayed: {}", homeLinkVisible);
     }
 
     public void clickOnViewProduct(){
@@ -42,7 +47,8 @@ public class ProductQuantityInCart {
     }
 
     public void verifyProductDetailIsOpened(){
-        System.out.println(driver.findElement(productDetailIsOpened).isDisplayed());
+        boolean detailDisplayed = driver.findElement(productDetailIsOpened).isDisplayed();
+        logger.info("Product detail is opened: {}", detailDisplayed);
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -84,7 +90,8 @@ public class ProductQuantityInCart {
         WebElement element2 = wait.until(
                 ExpectedConditions.visibilityOf(element));
         String value = element.getText();
-        System.out.println(value == quantity);
+        boolean matchesByReference = value == quantity;
+        logger.info("Quantity in cart '{}' vs expected '{}' using reference equality: {}", value, quantity, matchesByReference);
 
     }
 }
