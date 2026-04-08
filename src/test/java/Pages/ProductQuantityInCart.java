@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class ProductQuantityInCart {
+    private static final Logger logger = LogManager.getLogger(ProductQuantityInCart.class);
 
-    WebDriver driver;
+    private final WebDriver driver;
 
     public ProductQuantityInCart(WebDriver driver) {
         this.driver = driver;
@@ -32,59 +35,60 @@ public class ProductQuantityInCart {
     By quantityOfProductInCart = By.cssSelector("#product-1 > td.cart_quantity > button");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean isDisplayed = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home check element displayed: {}", isDisplayed);
     }
 
-    public void clickOnViewProduct(){
+    public void clickOnViewProduct() {
         WebElement textField = driver.findElement(viewProduct);
         String value2 = textField.getAttribute("href");
         driver.navigate().to(value2);
+        logger.info("Navigated to view product page: {}", value2);
     }
 
-    public void verifyProductDetailIsOpened(){
-        System.out.println(driver.findElement(productDetailIsOpened).isDisplayed());
+    public void verifyProductDetailIsOpened() {
+        boolean isDisplayed = driver.findElement(productDetailIsOpened).isDisplayed();
+        logger.info("Product details page is opened: {}", isDisplayed);
     }
 
-    public void clickOnAddToCartFirstProduct(){
+    public void clickOnAddToCartFirstProduct() {
         WebElement elementToHover = driver.findElement(firstProductQuantity);
-
-        // Find the element to click (can be the same or revealed after hover)
-        WebElement elementToClick = driver.findElement(By.cssSelector("#product_id"));
-
-        // Create Actions instance
         Actions actions = new Actions(driver);
 
         quantity = "4";
-        // Perform hover and click
         actions.moveToElement(elementToHover).perform();
         elementToHover.clear();
         elementToHover.sendKeys(quantity);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("Updated first product quantity to {}", quantity);
     }
 
-    public void clickOnAddToCart(){
+    public void clickOnAddToCart() {
         driver.findElement(addToCartButton).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("Clicked add to cart button");
     }
 
-    public void clickOnViewCart(){
+    public void clickOnViewCart() {
         WebElement textField = driver.findElement(viewCartLink);
         String value2 = textField.getAttribute("href");
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        WebElement element = wait.until(
-                ExpectedConditions.visibilityOf(textField));
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOf(textField));
+
         driver.navigate().to(value2);
-
-
+        logger.info("Navigated to cart page: {}", value2);
     }
 
-    public void verifyDetailsOfFirstProduct(){
+    public void verifyDetailsOfFirstProduct() {
         WebElement element = driver.findElement(quantityOfProductInCart);
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        WebElement element2 = wait.until(
-                ExpectedConditions.visibilityOf(element));
-        String value = element.getText();
-        System.out.println(value == quantity);
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOf(element));
+
+        String value = element.getText();
+        logger.info("Product quantity in cart is '{}', expected '{}', comparison result: {}",
+                value, quantity, value == quantity);
     }
 }
