@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class ProductWithCart {
+    private static final Logger logger = LogManager.getLogger(ProductWithCart.class);
     WebDriver driver;
 
     public ProductWithCart(WebDriver driver) {
@@ -51,121 +54,123 @@ public class ProductWithCart {
     By verifyCartEmpty = By.xpath("//span[@id=\"empty_cart\"]");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean isHomeVisible = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home check link visible: {}", isHomeVisible);
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 500);");
-
+        logger.debug("Scrolled down on home page by 500 pixels");
     }
 
     public void goToProductsPage() {
         WebElement textField = driver.findElement(productsButton);
         String value2 = textField.getAttribute("href");
+        logger.info("Navigating to products page URL: {}", value2);
         driver.navigate().to(value2);
     }
 
-    public void clickOnAddToCartFirstProduct(){
+    public void clickOnAddToCartFirstProduct() {
+        logger.info("Adding first product to cart");
         WebElement elementToHover = driver.findElement(selectFirstProduct);
 
-        // Find the element to click (can be the same or revealed after hover)
         WebElement elementToClick = driver.findElement(By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/a"));
 
-        // Create Actions instance
         Actions actions = new Actions(driver);
 
-        // Perform hover and click
         actions.moveToElement(elementToHover).perform();
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(hoverOnFirstProduct));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.elementToBeClickable(hoverOnFirstProduct));
         elementToClick.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("First product added to cart and implicit wait applied");
     }
 
-    public void clickOnAddToCartSeconedProduct(){
+    public void clickOnAddToCartSeconedProduct() {
+        logger.info("Adding second product to cart");
         WebElement elementToHover = driver.findElement(selectSecondProduct);
 
-        // Find the element to click (can be the same or revealed after hover)
         WebElement elementToClick = driver.findElement(hoverOnSecondProduct);
 
-        // Create Actions instance
         Actions actions = new Actions(driver);
 
-        // Perform hover and click
         actions.moveToElement(elementToHover).perform();
         elementToClick.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+        logger.info("Second product added to cart and implicit wait applied");
     }
 
-    public void goTocontinoueShopping(){
-//        WebElement textField = driver.findElement(continoueShopping);
-//        textField.click();
-        //driver.switchTo().alert().accept();
-
+    public void goTocontinoueShopping() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Wait until the modal is visible and the button is clickable
         WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(continoueShopping));
         continueButton.click();
+        logger.info("Clicked Continue Shopping button");
     }
 
-    public void goToCart(){
+    public void goToCart() {
         WebElement textField = driver.findElement(viewCartLink);
         String value2 = textField.getAttribute("href");
+        logger.info("Navigating to cart URL: {}", value2);
         driver.navigate().to(value2);
     }
 
-    public void verifyFirstProductAddedToCart(){
-        System.out.println(driver.findElement(firstProductAddedToCart).isDisplayed());
+    public void verifyFirstProductAddedToCart() {
+        boolean isFirstProductVisible = driver.findElement(firstProductAddedToCart).isDisplayed();
+        logger.info("First product displayed in cart: {}", isFirstProductVisible);
     }
 
-    public void verifySeconedProductAddedToCart(){
-        System.out.println(driver.findElement(secondProductAddedToCart).isDisplayed());
+    public void verifySeconedProductAddedToCart() {
+        boolean isSecondProductVisible = driver.findElement(secondProductAddedToCart).isDisplayed();
+        logger.info("Second product displayed in cart: {}", isSecondProductVisible);
     }
 
-    public void verifyDetailsOfFirstProduct(){
-        System.out.println(driver.findElement(firstProductPriceInCartPage).isDisplayed());
-        System.out.println(driver.findElement(firstProductQuantityInCartPage).isDisplayed());
-        System.out.println(driver.findElement(firstProductTotalPriceInCartPage).isDisplayed());
+    public void verifyDetailsOfFirstProduct() {
+        boolean isPriceVisible = driver.findElement(firstProductPriceInCartPage).isDisplayed();
+        boolean isQuantityVisible = driver.findElement(firstProductQuantityInCartPage).isDisplayed();
+        boolean isTotalVisible = driver.findElement(firstProductTotalPriceInCartPage).isDisplayed();
 
+        logger.info("First product details visible - price: {}, quantity: {}, total: {}",
+                isPriceVisible, isQuantityVisible, isTotalVisible);
     }
 
-    public void verifyDetailsOfSecondProduct(){
-        System.out.println(driver.findElement(seconedProductPriceInCartPage).isDisplayed());
-        System.out.println(driver.findElement(seconedProductQuantityInCartPage).isDisplayed());
-        System.out.println(driver.findElement(seconedProductTotalPriceInCartPage).isDisplayed());
+    public void verifyDetailsOfSecondProduct() {
+        boolean isPriceVisible = driver.findElement(seconedProductPriceInCartPage).isDisplayed();
+        boolean isQuantityVisible = driver.findElement(seconedProductQuantityInCartPage).isDisplayed();
+        boolean isTotalVisible = driver.findElement(seconedProductTotalPriceInCartPage).isDisplayed();
 
+        logger.info("Second product details visible - price: {}, quantity: {}, total: {}",
+                isPriceVisible, isQuantityVisible, isTotalVisible);
     }
 
-    public void chooseProductFromHome(){
+    public void chooseProductFromHome() {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        logger.debug("Applied implicit wait before selecting product from home");
 
         WebElement elementToHover = driver.findElement(hoverProductFromHome);
-
-        // Find the element to click (can be the same or revealed after hover)
         WebElement elementToClick = driver.findElement(clickAddToCartHome);
 
-        // Create Actions instance
         Actions actions = new Actions(driver);
 
-        // Perform hover and click
         actions.moveToElement(elementToHover).perform();
 
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(300));
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(clickAddToCartHome));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(300));
+        wait.until(ExpectedConditions.elementToBeClickable(clickAddToCartHome));
         elementToClick.click();
+        logger.info("Selected product from home and clicked add to cart");
     }
 
-    public void checkVerifyCartPage(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+    public void checkVerifyCartPage() {
+        boolean isCartPageVisible = driver.findElement(verifyCartPage).isDisplayed();
+        logger.info("Cart page verification element visible: {}", isCartPageVisible);
     }
 
-    public void checkDeleteProductFromCart(){
+    public void checkDeleteProductFromCart() {
         driver.findElement(deleteProductFromCart).click();
+        logger.info("Clicked delete product from cart");
     }
 
-    public void checkVerifyCartEmpty(){
-        System.out.println(driver.findElement(verifyCartEmpty).isDisplayed());
+    public void checkVerifyCartEmpty() {
+        boolean isCartEmptyVisible = driver.findElement(verifyCartEmpty).isDisplayed();
+        logger.info("Cart empty message visible: {}", isCartEmptyVisible);
     }
 }
