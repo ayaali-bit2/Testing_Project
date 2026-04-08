@@ -3,6 +3,7 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class LoginPage {
 
@@ -31,12 +32,13 @@ public class LoginPage {
 
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home section is not visible.");
     }
 
     public void SingInAndSignUpButton() {
         WebElement textField = driver.findElement(singInAndSignUpButton);
         String value2 = textField.getAttribute("href");
+        Assert.assertNotNull(value2, "Sign In / Sign Up link href is null.");
         driver.navigate().to(value2);
     }
 
@@ -52,22 +54,23 @@ public class LoginPage {
         driver.findElement(signUpButton).click();
     }
 
-    public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+    public void checkUserNameBar() {
+        Assert.assertTrue(driver.findElement(usernameInBar).isDisplayed(), "Logged-in username is not visible in header.");
     }
 
     public void deleteButton() {
         WebElement textField = driver.findElement(delet);
         String value2 = textField.getAttribute("href");
+        Assert.assertNotNull(value2, "Delete account link href is null.");
         driver.navigate().to(value2);
     }
 
-    public void checkIsDeleted(){
-        driver.findElement(checkDeleted).isDisplayed();
+    public void checkIsDeleted() {
+        Assert.assertTrue(driver.findElement(checkDeleted).isDisplayed(), "Account deleted confirmation is not visible.");
     }
 
-    public void checkInValidLoginMessageVisability(){
-        driver.findElement(InvalidLoginMessage).isDisplayed();
+    public void checkInValidLoginMessageVisability() {
+        Assert.assertTrue(driver.findElement(InvalidLoginMessage).isDisplayed(), "Invalid login message is not visible.");
     }
 
 

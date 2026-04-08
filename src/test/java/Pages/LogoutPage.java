@@ -3,6 +3,7 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class LogoutPage {
 
@@ -28,17 +29,18 @@ public class LogoutPage {
     By logoutButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home section is not visible.");
     }
 
     public void SingInAndSignUpButton() {
         WebElement textField = driver.findElement(singInAndSignUpButton);
         String value2 = textField.getAttribute("href");
+        Assert.assertNotNull(value2, "Sign In / Sign Up link href is null.");
         driver.navigate().to(value2);
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "Login/Signup page heading is not visible.");
     }
 
     public void setEmailAddressField(String emailAddressFieldtext) {
@@ -54,12 +56,13 @@ public class LogoutPage {
     }
 
     public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+        Assert.assertTrue(driver.findElement(usernameInBar).isDisplayed(), "Logged-in username is not visible in header.");
     }
 
     public void logoutButtonFun() {
         WebElement textField = driver.findElement(logoutButton);
         String value2 = textField.getAttribute("href");
+        Assert.assertNotNull(value2, "Logout link href is null.");
         driver.navigate().to(value2);
     }
 
