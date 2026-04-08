@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +13,7 @@ import java.time.Duration;
 
 public class ProductQuantityInCart {
 
+    private static final Logger logger = LogManager.getLogger(ProductQuantityInCart.class);
     WebDriver driver;
 
     public ProductQuantityInCart(WebDriver driver) {
@@ -32,17 +35,20 @@ public class ProductQuantityInCart {
     By quantityOfProductInCart = By.cssSelector("#product-1 > td.cart_quantity > button");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean homeVisible = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home check visibility: {}", homeVisible);
     }
 
     public void clickOnViewProduct(){
         WebElement textField = driver.findElement(viewProduct);
         String value2 = textField.getAttribute("href");
         driver.navigate().to(value2);
+        logger.info("Navigated to view product page: {}", value2);
     }
 
     public void verifyProductDetailIsOpened(){
-        System.out.println(driver.findElement(productDetailIsOpened).isDisplayed());
+        boolean productDetailVisible = driver.findElement(productDetailIsOpened).isDisplayed();
+        logger.info("Product detail page opened: {}", productDetailVisible);
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -60,11 +66,13 @@ public class ProductQuantityInCart {
         elementToHover.clear();
         elementToHover.sendKeys(quantity);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("Set first product quantity to {}", quantity);
     }
 
     public void clickOnAddToCart(){
         driver.findElement(addToCartButton).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("Clicked Add to Cart button");
     }
 
     public void clickOnViewCart(){
@@ -74,8 +82,7 @@ public class ProductQuantityInCart {
         WebElement element = wait.until(
                 ExpectedConditions.visibilityOf(textField));
         driver.navigate().to(value2);
-
-
+        logger.info("Navigated to cart page: {}", value2);
     }
 
     public void verifyDetailsOfFirstProduct(){
@@ -84,7 +91,8 @@ public class ProductQuantityInCart {
         WebElement element2 = wait.until(
                 ExpectedConditions.visibilityOf(element));
         String value = element.getText();
-        System.out.println(value == quantity);
-
+        boolean quantityMatch = quantity.equals(value);
+        logger.info("Verified product quantity in cart. expected: {}, actual: {}, match: {}",
+                quantity, value, quantityMatch);
     }
 }

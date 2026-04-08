@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class ProductWithCart {
+    private static final Logger logger = LogManager.getLogger(ProductWithCart.class);
     WebDriver driver;
 
     public ProductWithCart(WebDriver driver) {
@@ -51,16 +54,19 @@ public class ProductWithCart {
     By verifyCartEmpty = By.xpath("//span[@id=\"empty_cart\"]");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean homeVisible = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home check visibility: {}", homeVisible);
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 500);");
-
+        logger.debug("Scrolled down on home page by 500 pixels");
     }
 
     public void goToProductsPage() {
         WebElement textField = driver.findElement(productsButton);
         String value2 = textField.getAttribute("href");
         driver.navigate().to(value2);
+        logger.info("Navigated to products page: {}", value2);
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -79,6 +85,7 @@ public class ProductWithCart {
                 ExpectedConditions.elementToBeClickable(hoverOnFirstProduct));
         elementToClick.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("Clicked Add to Cart for first product");
     }
 
     public void clickOnAddToCartSeconedProduct(){
@@ -94,7 +101,7 @@ public class ProductWithCart {
         actions.moveToElement(elementToHover).perform();
         elementToClick.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+        logger.info("Clicked Add to Cart for second product");
     }
 
     public void goTocontinoueShopping(){
@@ -107,34 +114,42 @@ public class ProductWithCart {
         // Wait until the modal is visible and the button is clickable
         WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(continoueShopping));
         continueButton.click();
+        logger.info("Clicked Continue Shopping");
     }
 
     public void goToCart(){
         WebElement textField = driver.findElement(viewCartLink);
         String value2 = textField.getAttribute("href");
         driver.navigate().to(value2);
+        logger.info("Navigated to cart page: {}", value2);
     }
 
     public void verifyFirstProductAddedToCart(){
-        System.out.println(driver.findElement(firstProductAddedToCart).isDisplayed());
+        boolean firstProductVisible = driver.findElement(firstProductAddedToCart).isDisplayed();
+        logger.info("First product added to cart visible: {}", firstProductVisible);
     }
 
     public void verifySeconedProductAddedToCart(){
-        System.out.println(driver.findElement(secondProductAddedToCart).isDisplayed());
+        boolean secondProductVisible = driver.findElement(secondProductAddedToCart).isDisplayed();
+        logger.info("Second product added to cart visible: {}", secondProductVisible);
     }
 
     public void verifyDetailsOfFirstProduct(){
-        System.out.println(driver.findElement(firstProductPriceInCartPage).isDisplayed());
-        System.out.println(driver.findElement(firstProductQuantityInCartPage).isDisplayed());
-        System.out.println(driver.findElement(firstProductTotalPriceInCartPage).isDisplayed());
+        boolean firstPriceVisible = driver.findElement(firstProductPriceInCartPage).isDisplayed();
+        boolean firstQuantityVisible = driver.findElement(firstProductQuantityInCartPage).isDisplayed();
+        boolean firstTotalVisible = driver.findElement(firstProductTotalPriceInCartPage).isDisplayed();
 
+        logger.info("First product details visibility - price: {}, quantity: {}, total: {}",
+                firstPriceVisible, firstQuantityVisible, firstTotalVisible);
     }
 
     public void verifyDetailsOfSecondProduct(){
-        System.out.println(driver.findElement(seconedProductPriceInCartPage).isDisplayed());
-        System.out.println(driver.findElement(seconedProductQuantityInCartPage).isDisplayed());
-        System.out.println(driver.findElement(seconedProductTotalPriceInCartPage).isDisplayed());
+        boolean secondPriceVisible = driver.findElement(seconedProductPriceInCartPage).isDisplayed();
+        boolean secondQuantityVisible = driver.findElement(seconedProductQuantityInCartPage).isDisplayed();
+        boolean secondTotalVisible = driver.findElement(seconedProductTotalPriceInCartPage).isDisplayed();
 
+        logger.info("Second product details visibility - price: {}, quantity: {}, total: {}",
+                secondPriceVisible, secondQuantityVisible, secondTotalVisible);
     }
 
     public void chooseProductFromHome(){
@@ -155,17 +170,21 @@ public class ProductWithCart {
         WebElement element = wait.until(
                 ExpectedConditions.elementToBeClickable(clickAddToCartHome));
         elementToClick.click();
+        logger.info("Selected product from home and clicked Add to Cart");
     }
 
     public void checkVerifyCartPage(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        boolean cartPageVisible = driver.findElement(verifyCartPage).isDisplayed();
+        logger.info("Cart page verification element visible: {}", cartPageVisible);
     }
 
     public void checkDeleteProductFromCart(){
         driver.findElement(deleteProductFromCart).click();
+        logger.info("Clicked delete product from cart");
     }
 
     public void checkVerifyCartEmpty(){
-        System.out.println(driver.findElement(verifyCartEmpty).isDisplayed());
+        boolean cartEmptyVisible = driver.findElement(verifyCartEmpty).isDisplayed();
+        logger.info("Cart empty message visible: {}", cartEmptyVisible);
     }
 }
