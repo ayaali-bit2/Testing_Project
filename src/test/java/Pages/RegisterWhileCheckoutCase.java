@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +15,7 @@ import java.time.Duration;
 
 public class RegisterWhileCheckoutCase {
 
+    private static final Logger logger = LogManager.getLogger(RegisterWhileCheckoutCase.class);
     WebDriver driver;
 
     public RegisterWhileCheckoutCase(WebDriver driver) {
@@ -97,7 +100,8 @@ public class RegisterWhileCheckoutCase {
     By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean isDisplayed = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home section is displayed: {}", isDisplayed);
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -154,7 +158,8 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCartPageFun(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        boolean isDisplayed = driver.findElement(verifyCartPage).isDisplayed();
+        logger.info("Cart page is displayed: {}", isDisplayed);
     }
 
     public void ClickOnProcceedToCheckout(){
@@ -262,7 +267,8 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyNewUserCreated(){
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        boolean isDisplayed = driver.findElement(newUserSignUpVisible).isDisplayed();
+        logger.info("New user sign-up indicator is displayed: {}", isDisplayed);
     }
 
     public void clickOnCartButton(){
@@ -272,11 +278,13 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyAddressDetails(){
-        System.out.println(driver.findElement(addressDetails).isDisplayed());
+        boolean isDisplayed = driver.findElement(addressDetails).isDisplayed();
+        logger.info("Address details section is displayed: {}", isDisplayed);
     }
 
     public void verifyReviewYourOrder(){
-        System.out.println(driver.findElement(reviewYourOrder).isDisplayed());
+        boolean isDisplayed = driver.findElement(reviewYourOrder).isDisplayed();
+        logger.info("Review your order section is displayed: {}", isDisplayed);
     }
 
     public void writeCommentInTextArea(String text){
@@ -312,7 +320,8 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void checkSuccessMessage(){
-        System.out.println(driver.findElement(successMessage).isDisplayed());
+        boolean isDisplayed = driver.findElement(successMessage).isDisplayed();
+        logger.info("Order success message is displayed: {}", isDisplayed);
     }
 
     public void clickOnDelete(){
@@ -320,7 +329,8 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCheckDeleted(){
-        System.out.println(driver.findElement(checkDeleted).isDisplayed());
+        boolean isDisplayed = driver.findElement(checkDeleted).isDisplayed();
+        logger.info("Account deleted confirmation is displayed: {}", isDisplayed);
     }
 
 }
