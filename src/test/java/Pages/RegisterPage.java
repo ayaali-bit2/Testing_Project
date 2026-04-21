@@ -1,197 +1,480 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Test;
-import utils.BaseTest;
 
 import java.time.Duration;
+import java.util.Objects;
 
-public class RegisterPage  {
+public class RegisterPage {
 
-    WebDriver driver;
+    private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
+
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
     }
 
+    // =========================
+    // Locators
+    // =========================
+    private final By homeCheck = By.cssSelector(".features_items .title.text-center");
 
-    By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
+    private final By signInAndSignUpButton = By.cssSelector("a[href='/login']");
+    private final By newUserSignUpVisible = By.cssSelector(".signup-form h2");
 
-    By singInAndSignUpButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
-    By newUserSignUpVisible = By.cssSelector("#form > div > div > div:nth-child(3) > div > h2");
+    private final By userNameField = By.cssSelector("input[data-qa='signup-name']");
+    private final By emailAddressField = By.cssSelector("input[data-qa='signup-email']");
+    private final By signUpButton = By.cssSelector("button[data-qa='signup-button']");
+    private final By enterAccountInformation = By.xpath("//b[text()='Enter Account Information']");
 
-    By userNameField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=text]:nth-child(2)");
-    By emailAddressField = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > input[type=email]:nth-child(3)");
+    private final By mrRadioButton = By.id("id_gender1");
+    private final By mrsRadioButton = By.id("id_gender2");
 
-    By signupBtn = By.xpath("//button[@data-qa=\"signup-button\"]");
-    By enterAccountInformation = By.cssSelector("#form > div > div > div > div.login-form > h2 > b");
+    private final By passwordField = By.id("password");
 
+    private final By dayDate = By.id("days");
+    private final By monthDate = By.id("months");
+    private final By yearDate = By.id("years");
 
-    By Mr = By.cssSelector("##id_gender1");
-    By Mrs = By.cssSelector("#id_gender2");
+    private final By newsletterCheckbox = By.id("newsletter");
+    private final By specialOffersCheckbox = By.id("optin");
 
-    By password = By.cssSelector("#password");
+    private final By firstNameField = By.id("first_name");
+    private final By lastNameField = By.id("last_name");
+    private final By companyNameField = By.id("company");
+    private final By addressField = By.id("address1");
+    private final By address2Field = By.id("address2");
+    private final By countryField = By.id("country");
+    private final By stateField = By.id("state");
+    private final By cityField = By.id("city");
+    private final By zipCodeField = By.id("zipcode");
+    private final By mobileNumberField = By.id("mobile_number");
 
-    By dayDate = By.cssSelector("#days");
-    By monthDate = By.cssSelector("#months");
-    By yearDate = By.cssSelector("#years");
+    private final By createAccountButton = By.cssSelector("button[data-qa='create-account']");
 
-    By newsLetter = By.cssSelector("#newsletter");
-    By specialOffers = By.cssSelector("#optin");
+    private final By alreadyExistedUserError = By.xpath("//p[text()='Email Address already exist!']");
+    private final By accountCreatedMessage = By.cssSelector("b[data-qa='account-created']");
+    private final By continueButton = By.cssSelector("a[data-qa='continue-button']");
 
-    By firstName = By.cssSelector("#first_name");
-    By lastNmae = By.cssSelector("#last_name");
-
-    By companyName = By.cssSelector("#company");
-
-    By addressField = By.cssSelector("#address1");
-    By address2Field = By.cssSelector("#address2");
-
-    By contoryField = By.cssSelector("#country");
-
-    By stateField = By.cssSelector("#state");
-    By cityField = By.cssSelector("#city");
-    By zipCode = By.cssSelector("#zipcode");
-    By mobileNumber = By.cssSelector("#mobile_number");
-
-    By createAccountButton = By.cssSelector("#form > div > div > div > div.login-form > form > button");
-
-    By alreadyExistedUser = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > p");
-
-    By verifyAccountCreated = By.cssSelector("#form > div > div > div > h2 > b");
-
-    By continueButtin = By.cssSelector("#form > div > div > div > div > a");
-
-    public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+    // =========================
+    // Model + Enum
+    // =========================
+    public enum Gender {
+        MR,
+        MRS
     }
 
+    public static class User {
+        private final String userName;
+        private final String firstName;
+        private final String lastName;
+        private final String email;
+        private final String password;
+        private final String company;
+        private final String address1;
+        private final String address2;
+        private final String country;
+        private final String state;
+        private final String city;
+        private final String zipCode;
+        private final String mobileNumber;
+        private final String day;
+        private final String month;
+        private final String year;
+        private final Gender gender;
+        private final boolean subscribeToNewsletter;
+        private final boolean receiveSpecialOffers;
+
+        public User(
+                String userName,
+                String firstName,
+                String lastName,
+                String email,
+                String password,
+                String company,
+                String address1,
+                String address2,
+                String country,
+                String state,
+                String city,
+                String zipCode,
+                String mobileNumber,
+                String day,
+                String month,
+                String year,
+                Gender gender,
+                boolean subscribeToNewsletter,
+                boolean receiveSpecialOffers
+        ) {
+            this.userName = Objects.requireNonNull(userName, "userName is required");
+            this.firstName = Objects.requireNonNull(firstName, "firstName is required");
+            this.lastName = Objects.requireNonNull(lastName, "lastName is required");
+            this.email = Objects.requireNonNull(email, "email is required");
+            this.password = Objects.requireNonNull(password, "password is required");
+            this.company = Objects.requireNonNull(company, "company is required");
+            this.address1 = Objects.requireNonNull(address1, "address1 is required");
+            this.address2 = Objects.requireNonNull(address2, "address2 is required");
+            this.country = Objects.requireNonNull(country, "country is required");
+            this.state = Objects.requireNonNull(state, "state is required");
+            this.city = Objects.requireNonNull(city, "city is required");
+            this.zipCode = Objects.requireNonNull(zipCode, "zipCode is required");
+            this.mobileNumber = Objects.requireNonNull(mobileNumber, "mobileNumber is required");
+            this.day = Objects.requireNonNull(day, "day is required");
+            this.month = Objects.requireNonNull(month, "month is required");
+            this.year = Objects.requireNonNull(year, "year is required");
+            this.gender = Objects.requireNonNull(gender, "gender is required");
+            this.subscribeToNewsletter = subscribeToNewsletter;
+            this.receiveSpecialOffers = receiveSpecialOffers;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public String getCompany() {
+            return company;
+        }
+
+        public String getAddress1() {
+            return address1;
+        }
+
+        public String getAddress2() {
+            return address2;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public String getZipCode() {
+            return zipCode;
+        }
+
+        public String getMobileNumber() {
+            return mobileNumber;
+        }
+
+        public String getDay() {
+            return day;
+        }
+
+        public String getMonth() {
+            return month;
+        }
+
+        public String getYear() {
+            return year;
+        }
+
+        public Gender getGender() {
+            return gender;
+        }
+
+        public boolean isSubscribeToNewsletter() {
+            return subscribeToNewsletter;
+        }
+
+        public boolean isReceiveSpecialOffers() {
+            return receiveSpecialOffers;
+        }
+    }
+
+    // =========================
+    // Helpers
+    // =========================
+    private void log(String message) {
+        System.out.println("[RegisterPage] " + message);
+    }
+
+    private WebElement waitForVisibility(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    private WebElement waitForClickability(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    private boolean isVisible(By locator) {
+        try {
+            waitForVisibility(locator);
+            return true;
+        } catch (TimeoutException ex) {
+            return false;
+        }
+    }
+
+    private void click(By locator) {
+        waitForClickability(locator).click();
+    }
+
+    private void type(By locator, String value) {
+        WebElement element = waitForVisibility(locator);
+        element.clear();
+        element.sendKeys(value);
+    }
+
+    private void selectByContainsVisibleText(By locator, String value) {
+        Select selector = new Select(waitForVisibility(locator));
+        selector.selectByContainsVisibleText(value);
+    }
+
+    private void setCheckbox(By locator, boolean shouldBeSelected) {
+        WebElement checkbox = waitForClickability(locator);
+        if (checkbox.isSelected() != shouldBeSelected) {
+            checkbox.click();
+        }
+    }
+
+    // =========================
+    // Validations
+    // =========================
+    public boolean HomeCheck() {
+        boolean visible = isVisible(homeCheck);
+        log("Home visible: " + visible);
+        return visible;
+    }
+
+    public boolean NewUserSignUpVisible() {
+        boolean visible = isVisible(newUserSignUpVisible);
+        log("New User Sign Up visible: " + visible);
+        return visible;
+    }
+
+    public boolean setEnterAccountInformation() {
+        boolean visible = isVisible(enterAccountInformation);
+        log("Enter Account Information visible: " + visible);
+        return visible;
+    }
+
+    public boolean registerWithExistedUser() {
+        boolean visible = isVisible(alreadyExistedUserError);
+        log("Existing user error visible: " + visible);
+        return visible;
+    }
+
+    public boolean verifyAccountCreatedFun() {
+        boolean visible = isVisible(accountCreatedMessage);
+        log("Account created message visible: " + visible);
+        return visible;
+    }
+
+    public boolean isAccountCreationSuccess() {
+        return verifyAccountCreatedFun();
+    }
+
+    public boolean isExistingUserErrorVisible() {
+        return registerWithExistedUser();
+    }
+
+    public boolean isSignUpFormVisible() {
+        return NewUserSignUpVisible();
+    }
+
+    public boolean isAccountInformationFormVisible() {
+        return setEnterAccountInformation();
+    }
+
+    // =========================
+    // Actions - Entry / Navigation
+    // =========================
     public void SingInAndSignUpButton() {
-        WebElement textField = driver.findElement(singInAndSignUpButton);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+        click(signInAndSignUpButton);
+        log("Clicked Sign In / Sign Up.");
     }
 
-    public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+    public void clickOnContinueButton() {
+        click(continueButton);
+        log("Clicked Continue.");
     }
 
+    // =========================
+    // Actions - Sign Up
+    // =========================
     public void setUserName(String userName) {
-        driver.findElement(userNameField).sendKeys(userName);
+        type(userNameField, userName);
     }
 
     public void setEmailAddress(String emailAddress) {
-        driver.findElement(emailAddressField).sendKeys(emailAddress);
+        type(emailAddressField, emailAddress);
     }
 
     public void setSignUpButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(signupBtn));
-        element.click();
+        click(signUpButton);
+        log("Clicked Sign Up.");
     }
 
-    public void setEnterAccountInformation() {
-        System.out.println(driver.findElement(enterAccountInformation).isDisplayed());
+    public void fillSignUpCredentials(String userName, String emailAddress) {
+        setUserName(userName);
+        setEmailAddress(emailAddress);
     }
 
+    // =========================
+    // Actions - Account Information
+    // =========================
     public void setMr() {
-        driver.findElement(Mr).click();
+        selectGender(Gender.MR);
     }
 
     public void setMrs() {
-        driver.findElement(Mrs).click();
+        selectGender(Gender.MRS);
+    }
+
+    public void selectGender(Gender gender) {
+        if (gender == Gender.MR) {
+            click(mrRadioButton);
+        } else {
+            click(mrsRadioButton);
+        }
     }
 
     public void setPassword(String pass) {
-        driver.findElement(password).sendKeys(pass);
+        type(passwordField, pass);
     }
 
     public void setDayDate(String day) {
-        Select daySeletor = new Select(driver.findElement(dayDate));
-        daySeletor.selectByContainsVisibleText(day);
+        selectByContainsVisibleText(dayDate, day);
     }
 
     public void setMonthDate(String month) {
-        Select daySeletor = new Select(driver.findElement(monthDate));
-        daySeletor.selectByContainsVisibleText(month);
+        selectByContainsVisibleText(monthDate, month);
     }
 
     public void setYearDate(String year) {
-        Select daySeletor = new Select(driver.findElement(yearDate));
-        daySeletor.selectByContainsVisibleText(year);
+        selectByContainsVisibleText(yearDate, year);
     }
 
     public void setNewsLetter() {
-        driver.findElement(newsLetter).click();
+        setCheckbox(newsletterCheckbox, true);
     }
 
     public void setSpecialOffers() {
-        driver.findElement(specialOffers).click();
+        setCheckbox(specialOffersCheckbox, true);
     }
 
-    public void setFirstName(String fName) {
-        driver.findElement(firstName).sendKeys(fName);
+    public void fillAccountInformation(User user) {
+        selectGender(user.getGender());
+        setPassword(user.getPassword());
+        setDayDate(user.getDay());
+        setMonthDate(user.getMonth());
+        setYearDate(user.getYear());
+        setCheckbox(newsletterCheckbox, user.isSubscribeToNewsletter());
+        setCheckbox(specialOffersCheckbox, user.isReceiveSpecialOffers());
     }
 
-    public void setLastNmae(String lName) {
-        driver.findElement(lastNmae).sendKeys(lName);
+    // =========================
+    // Actions - Address Information
+    // =========================
+    public void setFirstName(String firstName) {
+        type(firstNameField, firstName);
     }
 
-    public void setCompanyName(String comName) {
-        driver.findElement(companyName).sendKeys(comName);
+    public void setLastName(String lastName) {
+        type(lastNameField, lastName);
+    }
+
+    // Backward-compatible alias
+    public void setLastNmae(String lastName) {
+        setLastName(lastName);
+    }
+
+    public void setCompanyName(String companyName) {
+        type(companyNameField, companyName);
     }
 
     public void setAddressField(String addressText) {
-        driver.findElement(addressField).sendKeys(addressText);
+        type(addressField, addressText);
     }
 
     public void setAddress2Field(String address2Text) {
-        driver.findElement(address2Field).sendKeys(address2Text);
+        type(address2Field, address2Text);
     }
 
-    public void setContoryField(String contoryFi) {
-        Select selector = new Select(driver.findElement(contoryField));
-        selector.selectByContainsVisibleText(contoryFi);
+    public void setCountryField(String country) {
+        selectByContainsVisibleText(countryField, country);
     }
 
-    public void setStateField(String stateFi) {
-        driver.findElement(stateField).sendKeys(stateFi);
+    // Backward-compatible alias
+    public void setContoryField(String country) {
+        setCountryField(country);
     }
 
-    public void setCityField(String cityFi) {
-        driver.findElement(cityField).sendKeys(cityFi);
+    public void setStateField(String state) {
+        type(stateField, state);
     }
 
-    public void setZipCode(String zipCodefi) {
-        driver.findElement(zipCode).sendKeys(zipCodefi);
+    public void setCityField(String city) {
+        type(cityField, city);
     }
 
-    public void setMobileNumber(String mobileNumberText) {
-        driver.findElement(mobileNumber).sendKeys(mobileNumberText);
+    public void setZipCode(String zipCode) {
+        type(zipCodeField, zipCode);
     }
 
+    public void setMobileNumber(String mobileNumber) {
+        type(mobileNumberField, mobileNumber);
+    }
+
+    public void fillAddressInformation(User user) {
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setCompanyName(user.getCompany());
+        setAddressField(user.getAddress1());
+        setAddress2Field(user.getAddress2());
+        setCountryField(user.getCountry());
+        setStateField(user.getState());
+        setCityField(user.getCity());
+        setZipCode(user.getZipCode());
+        setMobileNumber(user.getMobileNumber());
+    }
+
+    // =========================
+    // Actions - Finalize Registration
+    // =========================
     public void setCreateAccountButton() {
-        driver.findElement(createAccountButton).click();
+        click(createAccountButton);
+        log("Clicked Create Account.");
     }
 
-    public void registerWithExistedUser(){
-        driver.findElement(alreadyExistedUser).isDisplayed();
-    }
-
-    public void verifyAccountCreatedFun(){
-        System.out.println(driver.findElement(verifyAccountCreated).isDisplayed());
-    }
-
-    public void clickOnContinueButton(){
-        WebElement textField = driver.findElement(continueButtin);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+    public void registerNewUser(User user) {
+        SingInAndSignUpButton();
+        fillSignUpCredentials(user.getUserName(), user.getEmail());
+        setSignUpButton();
+        fillAccountInformation(user);
+        fillAddressInformation(user);
+        setCreateAccountButton();
     }
 }
