@@ -91,12 +91,10 @@ public class RegisterPage  {
     }
 
     public void setSignUpButton() {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement element = wait.until(
-//                ExpectedConditions.elementToBeClickable(signupBtn));
-//        element.click();
-
-        driver.findElement(signupBtn).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(
+                ExpectedConditions.elementToBeClickable(signupBtn));
+        element.click();
     }
 
     public void setEnterAccountInformation() {
