@@ -3,23 +3,21 @@ package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Test;
-import utils.BaseTest;
 
 import java.time.Duration;
 
-public class RegisterPage  {
+public class RegisterPage {
+
+    private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
 
     WebDriver driver;
 
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
     }
-
 
     By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
 
@@ -32,8 +30,7 @@ public class RegisterPage  {
     By signupBtn = By.xpath("//button[@data-qa=\"signup-button\"]");
     By enterAccountInformation = By.cssSelector("#form > div > div > div > div.login-form > h2 > b");
 
-
-    By Mr = By.cssSelector("##id_gender1");
+    By Mr = By.cssSelector("#id_gender1");
     By Mrs = By.cssSelector("#id_gender2");
 
     By password = By.cssSelector("#password");
@@ -68,130 +65,141 @@ public class RegisterPage  {
 
     By continueButtin = By.cssSelector("#form > div > div > div > div > a");
 
+    private WebDriverWait waitDriver() {
+        return new WebDriverWait(driver, DEFAULT_TIMEOUT);
+    }
+
+    private WebElement waitUntilVisible(By locator) {
+        return waitDriver().until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    private WebElement waitUntilClickable(By locator) {
+        return waitDriver().until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    private void type(By locator, String value) {
+        WebElement element = waitUntilVisible(locator);
+        element.clear();
+        element.sendKeys(value);
+    }
+
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        System.out.println(waitUntilVisible(homeCheck).isDisplayed());
     }
 
     public void SingInAndSignUpButton() {
-        WebElement textField = driver.findElement(singInAndSignUpButton);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+        waitUntilClickable(singInAndSignUpButton).click();
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        System.out.println(waitUntilVisible(newUserSignUpVisible).isDisplayed());
     }
 
     public void setUserName(String userName) {
-        driver.findElement(userNameField).sendKeys(userName);
+        type(userNameField, userName);
     }
 
     public void setEmailAddress(String emailAddress) {
-        driver.findElement(emailAddressField).sendKeys(emailAddress);
+        type(emailAddressField, emailAddress);
     }
 
     public void setSignUpButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(signupBtn));
-        element.click();
+        waitUntilClickable(signupBtn).click();
     }
 
     public void setEnterAccountInformation() {
-        System.out.println(driver.findElement(enterAccountInformation).isDisplayed());
+        System.out.println(waitUntilVisible(enterAccountInformation).isDisplayed());
     }
 
     public void setMr() {
-        driver.findElement(Mr).click();
+        waitUntilClickable(Mr).click();
     }
 
     public void setMrs() {
-        driver.findElement(Mrs).click();
+        waitUntilClickable(Mrs).click();
     }
 
     public void setPassword(String pass) {
-        driver.findElement(password).sendKeys(pass);
+        type(password, pass);
     }
 
     public void setDayDate(String day) {
-        Select daySeletor = new Select(driver.findElement(dayDate));
+        Select daySeletor = new Select(waitUntilVisible(dayDate));
         daySeletor.selectByContainsVisibleText(day);
     }
 
     public void setMonthDate(String month) {
-        Select daySeletor = new Select(driver.findElement(monthDate));
+        Select daySeletor = new Select(waitUntilVisible(monthDate));
         daySeletor.selectByContainsVisibleText(month);
     }
 
     public void setYearDate(String year) {
-        Select daySeletor = new Select(driver.findElement(yearDate));
+        Select daySeletor = new Select(waitUntilVisible(yearDate));
         daySeletor.selectByContainsVisibleText(year);
     }
 
     public void setNewsLetter() {
-        driver.findElement(newsLetter).click();
+        waitUntilClickable(newsLetter).click();
     }
 
     public void setSpecialOffers() {
-        driver.findElement(specialOffers).click();
+        waitUntilClickable(specialOffers).click();
     }
 
     public void setFirstName(String fName) {
-        driver.findElement(firstName).sendKeys(fName);
+        type(firstName, fName);
     }
 
     public void setLastNmae(String lName) {
-        driver.findElement(lastNmae).sendKeys(lName);
+        type(lastNmae, lName);
     }
 
     public void setCompanyName(String comName) {
-        driver.findElement(companyName).sendKeys(comName);
+        type(companyName, comName);
     }
 
     public void setAddressField(String addressText) {
-        driver.findElement(addressField).sendKeys(addressText);
+        type(addressField, addressText);
     }
 
     public void setAddress2Field(String address2Text) {
-        driver.findElement(address2Field).sendKeys(address2Text);
+        type(address2Field, address2Text);
     }
 
     public void setContoryField(String contoryFi) {
-        Select selector = new Select(driver.findElement(contoryField));
+        Select selector = new Select(waitUntilVisible(contoryField));
         selector.selectByContainsVisibleText(contoryFi);
     }
 
     public void setStateField(String stateFi) {
-        driver.findElement(stateField).sendKeys(stateFi);
+        type(stateField, stateFi);
     }
 
     public void setCityField(String cityFi) {
-        driver.findElement(cityField).sendKeys(cityFi);
+        type(cityField, cityFi);
     }
 
     public void setZipCode(String zipCodefi) {
-        driver.findElement(zipCode).sendKeys(zipCodefi);
+        type(zipCode, zipCodefi);
     }
 
     public void setMobileNumber(String mobileNumberText) {
-        driver.findElement(mobileNumber).sendKeys(mobileNumberText);
+        type(mobileNumber, mobileNumberText);
     }
 
     public void setCreateAccountButton() {
-        driver.findElement(createAccountButton).click();
+        waitUntilClickable(createAccountButton).click();
     }
 
-    public void registerWithExistedUser(){
-        driver.findElement(alreadyExistedUser).isDisplayed();
+    public void registerWithExistedUser() {
+        waitUntilVisible(alreadyExistedUser).isDisplayed();
     }
 
-    public void verifyAccountCreatedFun(){
-        System.out.println(driver.findElement(verifyAccountCreated).isDisplayed());
+    public void verifyAccountCreatedFun() {
+        System.out.println(waitUntilVisible(verifyAccountCreated).isDisplayed());
     }
 
-    public void clickOnContinueButton(){
-        WebElement textField = driver.findElement(continueButtin);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+    public void clickOnContinueButton() {
+        waitUntilClickable(continueButtin).click();
     }
 }
