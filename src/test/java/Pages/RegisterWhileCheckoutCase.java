@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class RegisterWhileCheckoutCase {
+
+    private static final Logger logger = LogManager.getLogger(RegisterWhileCheckoutCase.class);
 
     WebDriver driver;
 
@@ -97,7 +101,7 @@ public class RegisterWhileCheckoutCase {
     By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        logger.info(driver.findElement(homeCheck).isDisplayed());
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -154,7 +158,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCartPageFun(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        logger.info(driver.findElement(verifyCartPage).isDisplayed());
     }
 
     public void ClickOnProcceedToCheckout(){
@@ -262,7 +266,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyNewUserCreated(){
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        logger.info(driver.findElement(newUserSignUpVisible).isDisplayed());
     }
 
     public void clickOnCartButton(){
@@ -272,11 +276,11 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyAddressDetails(){
-        System.out.println(driver.findElement(addressDetails).isDisplayed());
+        logger.info(driver.findElement(addressDetails).isDisplayed());
     }
 
     public void verifyReviewYourOrder(){
-        System.out.println(driver.findElement(reviewYourOrder).isDisplayed());
+        logger.info(driver.findElement(reviewYourOrder).isDisplayed());
     }
 
     public void writeCommentInTextArea(String text){
@@ -312,7 +316,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void checkSuccessMessage(){
-        System.out.println(driver.findElement(successMessage).isDisplayed());
+        logger.info(driver.findElement(successMessage).isDisplayed());
     }
 
     public void clickOnDelete(){
@@ -320,7 +324,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCheckDeleted(){
-        System.out.println(driver.findElement(checkDeleted).isDisplayed());
+        logger.info(driver.findElement(checkDeleted).isDisplayed());
     }
 
 }
