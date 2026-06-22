@@ -1,74 +1,80 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage {
 
-    WebDriver driver;
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
-    By homeCheck = By.cssSelector("body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div.features_items > h2");
-    By singInAndSignUpButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
-    //By newUserSignUpVisible = By.cssSelector("#form > div > div > div:nth-child(3) > div > h2");
-
-    By emailAddressField = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > input[type=email]:nth-child(2)");
-    By passwordField = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > input[type=password]:nth-child(3)");
-
-
-    By signUpButton = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > button");
-
-    By usernameInBar = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(10) > a > b");
-    By delet = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(5) > a");
-
-    By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
-
-    By InvalidLoginMessage = By.cssSelector("#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > p");
-
+    By homeCheck = By.cssSelector("div.features_items h2");
+    By singInAndSignUpButton = By.cssSelector("a[href='/login']");
+    By emailAddressField = By.cssSelector("input[data-qa='login-email']");
+    By passwordField = By.cssSelector("input[data-qa='login-password']");
+    By signUpButton = By.cssSelector("button[data-qa='login-button']");
+    By usernameInBar = By.xpath("//a[contains(.,'Logged in as')]");
+    By delet = By.cssSelector("a[href='/delete_account']");
+    By checkDeleted = By.cssSelector("h2[data-qa='account-deleted']");
+    By invalidLoginMessage = By.xpath("//p[contains(text(),'incorrect')]");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(homeCheck));
     }
 
     public void SingInAndSignUpButton() {
-        WebElement textField = driver.findElement(singInAndSignUpButton);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+        wait.until(ExpectedConditions.elementToBeClickable(singInAndSignUpButton)).click();
+        wait.until(ExpectedConditions.urlContains("/login"));
     }
 
     public void setEmailAddressField(String emailAddressFieldtext) {
-        driver.findElement(emailAddressField).sendKeys(emailAddressFieldtext);
+        WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(emailAddressField));
+        email.clear();
+        email.sendKeys(emailAddressFieldtext);
     }
 
     public void setPasswordField(String passwordFieldtext) {
-        driver.findElement(passwordField).sendKeys(passwordFieldtext);
+        WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
+        password.clear();
+        password.sendKeys(passwordFieldtext);
     }
 
     public void setSignUpButton() {
-        driver.findElement(signUpButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(signUpButton)).click();
+        wait.until(webDriver ->
+                "complete".equals(((JavascriptExecutor) webDriver).executeScript("return document.readyState")));
     }
 
-    public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+    public void loginAs(String email, String password) {
+        setEmailAddressField(email);
+        setPasswordField(password);
+        setSignUpButton();
+    }
+
+    public void checkUserNameBar() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameInBar));
     }
 
     public void deleteButton() {
-        WebElement textField = driver.findElement(delet);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+        wait.until(ExpectedConditions.elementToBeClickable(delet)).click();
     }
 
-    public void checkIsDeleted(){
-        driver.findElement(checkDeleted).isDisplayed();
+    public void checkIsDeleted() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(checkDeleted));
     }
 
-    public void checkInValidLoginMessageVisability(){
-        driver.findElement(InvalidLoginMessage).isDisplayed();
+    public void checkInValidLoginMessageVisability() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(invalidLoginMessage));
     }
-
-
 }
