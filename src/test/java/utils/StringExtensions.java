@@ -11,6 +11,13 @@ public final class StringExtensions {
         throw new IllegalStateException("Utility class");
     }
 
+      /**
+     * Validates whether the provided string is a valid email address.
+     *
+     * @param value email address to validate
+     * @return true if the email is valid; otherwise false
+     */
+
     public static boolean isValidEmail(String value) {
         if (value == null) {
             return false;
