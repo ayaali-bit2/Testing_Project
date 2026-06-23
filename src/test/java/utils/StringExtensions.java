@@ -23,11 +23,6 @@ public final class StringExtensions {
             return false;
         }
 
-        String trimmed = value.trim();
-        if (trimmed.isEmpty()) {
-            return false;
-        }
-
-        return EMAIL_PATTERN.matcher(trimmed).matches();
+        return EMAIL_PATTERN.matcher(value).matches();
     }
 }
