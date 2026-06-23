@@ -1,0 +1,26 @@
+package utils;
+
+import java.util.regex.Pattern;
+
+public final class StringExtensions {
+
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+
+    private StringExtensions() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static boolean isValidEmail(String value) {
+        if (value == null) {
+            return false;
+        }
+
+        String trimmed = value.trim();
+        if (trimmed.isEmpty()) {
+            return false;
+        }
+
+        return EMAIL_PATTERN.matcher(trimmed).matches();
+    }
+}
