@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
-        <!-- Console log (optional) -->
+        <RollingFile name="RollingFile" fileName="logs/automation-log.log"
+                     filePattern="logs/automation-log-%d{yyyy-MM-dd}-%i.log.gz"
+                     size="10MB" policy="Policies">
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <PatternLayout pattern="%d [%t] %-5level: %msg%n"/>
+        </RollingFile>
+        
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d [%t] %-5level: %msg%n" />
+            <PatternLayout pattern="%d [%t] %-5level: %msg%n"/>
         </Console>
-
-        <!-- File log -->
-        <File name="FileLogger" fileName="logs/automation-log.log">
-            <PatternLayout pattern="%d [%t] %-5level: %msg%n" />
-        </File>
     </Appenders>
-
+    
     <Loggers>
-        <Root level="debug">
+        <Root level="${sys:log.level:-info}">
+            <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="FileLogger"/>
         </Root>
     </Loggers>
 </Configuration>
