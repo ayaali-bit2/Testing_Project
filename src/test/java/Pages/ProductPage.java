@@ -2,107 +2,95 @@ package Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.time.Duration;
 
 public class ProductPage {
 
-    WebDriver driver;
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     public ProductPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
+    private By homeCheck = By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[1]/a");
+    private By productsButton = By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[2]/a");
+    private By productsPageHeader = By.xpath("/html/body/section[2]/div/div/div[2]/div/h2");
+    private By productsListSection = By.xpath("/html/body/section[2]/div/div/div[2]");
+    private By viewProductLink = By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[2]/ul/li/a");
+    private By productName = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/h2");
+    private By productCategory = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[1]");
+    private By productPrice = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/span/span");
+    private By productAvailability = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[2]/b");
+    private By productCondition = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[3]/b");
+    private By productBrand = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[4]/b");
+    private By searchBar = By.xpath("//*[@id=\"search_product\"]");
+    private By searchButton = By.xpath("//*[@id=\"search_product\"]");
+    private By searchedProductsHeader = By.xpath("/html/body/section[2]/div/div/div[2]/div/h2");
+    private By relatedProductsSection = By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/p");
 
-    By homeCheck = By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[1]/a");
-    By productsButton = By.xpath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[2]/a");
-    By verifyProductsButton = By.xpath("/html/body/section[2]/div/div/div[2]/div/h2");
-
-    By verifyProductsListVisable = By.xpath("/html/body/section[2]/div/div/div[2]");
-
-    By clickOnViewProduct = By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[2]/ul/li/a");
-
-    By checkNavigationIntoRightProduct = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/h2");
-
-    By productName = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/h2");
-    By productCategory = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[1]");
-    By productPrice = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/span/span");
-    By productAvailability = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[2]/b");
-    By productCondition = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[3]/b");
-    By productBrand = By.xpath("/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[4]/b");
-
-    By searchBar = By.xpath("//*[@id=\"search_product\"]");
-    By getSearchButton = By.xpath("//*[@id=\"search_product\"]");
-
-    By verifySearchedProduct = By.xpath("/html/body/section[2]/div/div/div[2]/div/h2");
-
-    By relatedSearchProducts = By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/p");
-
-    public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+    public void verifyHomePageDisplayed() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(homeCheck));
+        Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home link is not displayed");
     }
 
-    public void productsButtonFun() {
-        WebElement textField = driver.findElement(productsButton);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+    public void goToProductsPage() {
+        wait.until(ExpectedConditions.elementToBeClickable(productsButton));
+        driver.findElement(productsButton).click();
     }
 
-    public void verifyProductsButtonFun(){
-        System.out.println(driver.findElement(verifyProductsButton).isDisplayed());
+    public void verifyProductsPageHeaderDisplayed() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productsPageHeader));
+        Assert.assertTrue(driver.findElement(productsPageHeader).isDisplayed(), "Products page header is not displayed");
     }
 
-    public void verifyProductsVisableFun(){
-        System.out.println(driver.findElement(verifyProductsListVisable).isDisplayed());
+    public void verifyProductsListDisplayed() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productsListSection));
+        Assert.assertTrue(driver.findElement(productsListSection).isDisplayed(), "Products list is not displayed");
     }
 
-    public void clickOnViewProductFun(){
-        WebElement textField = driver.findElement(clickOnViewProduct);
-        String value2 = textField.getAttribute("href");
-        driver.navigate().to(value2);
+    public void viewFirstProductDetails() {
+        wait.until(ExpectedConditions.elementToBeClickable(viewProductLink));
+        driver.findElement(viewProductLink).click();
     }
 
-    public void checkNavigationIntoRightProductFun(){
-        System.out.println(driver.findElement(checkNavigationIntoRightProduct).isDisplayed());
+    public void verifyProductDetailsPageDisplayed() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productName));
+        Assert.assertTrue(driver.findElement(productName).isDisplayed(), "Product details header is not displayed");
     }
 
-    public void checkDetailsOfFirstProduct(){
-
-        String productNametext = driver.findElement(productName).getText();
-        Assert.assertEquals(productNametext,"Blue Top","Product Name Fail");
-
-        String productCategorytext = driver.findElement(productCategory).getText();
-        Assert.assertEquals(productCategorytext,"Category: Women > Tops","Product Category Fail");
-
-        String productPricetext = driver.findElement(productPrice).getText();
-        Assert.assertEquals(productPricetext,"Rs. 500","Product Price Fail");
-
-        String productAvailabilitytext = driver.findElement(productAvailability).getText();
-        Assert.assertEquals(productAvailabilitytext,"Availability:","Product Avability Fail");
-
-        String productConditiontext = driver.findElement(productCondition).getText();
-        Assert.assertEquals(productConditiontext,"Condition:","Product Condition Fail");
-
-        String productBrandtext = driver.findElement(productBrand).getText();
-        Assert.assertEquals(productBrandtext,"Brand:","Product Brand Fail");
-
+    public void verifyFirstProductDetails() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productName));
+        Assert.assertEquals(driver.findElement(productName).getText(), "Blue Top", "Product name mismatch");
+        Assert.assertEquals(driver.findElement(productCategory).getText(), "Category: Women > Tops", "Product category mismatch");
+        Assert.assertEquals(driver.findElement(productPrice).getText(), "Rs. 500", "Product price mismatch");
+        Assert.assertEquals(driver.findElement(productAvailability).getText(), "Availability:", "Product availability mismatch");
+        Assert.assertEquals(driver.findElement(productCondition).getText(), "Condition:", "Product condition mismatch");
+        Assert.assertEquals(driver.findElement(productBrand).getText(), "Brand:", "Product brand mismatch");
     }
 
-    public void addValueToSearchBar(String product){
+    public void enterSearchQuery(String product) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchBar));
         driver.findElement(searchBar).sendKeys(product);
     }
 
-    public void clickOnSearchButton(){
-        driver.findElement(getSearchButton).click();
+    public void clickSearchButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(searchButton));
+        driver.findElement(searchButton).click();
     }
 
-    public void verifySearchedProductFun(){
-        System.out.println(driver.findElement(verifySearchedProduct).isDisplayed());
+    public void verifySearchResultsDisplayed() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchedProductsHeader));
+        Assert.assertTrue(driver.findElement(searchedProductsHeader).isDisplayed(), "Search results header is not displayed");
     }
 
-    public void getRelatedSearchProductsFun(){
-        System.out.println(driver.findElement(relatedSearchProducts).isDisplayed());
+    public void verifyRelatedProductsDisplayed() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(relatedProductsSection));
+        Assert.assertTrue(driver.findElement(relatedProductsSection).isDisplayed(), "Related products are not displayed");
     }
-
-
 }
