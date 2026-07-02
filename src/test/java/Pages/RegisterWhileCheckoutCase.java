@@ -1,5 +1,7 @@
 package Pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class RegisterWhileCheckoutCase {
+
+    private static final Logger logger = LogManager.getLogger(RegisterWhileCheckoutCase.class);
 
     WebDriver driver;
 
@@ -97,7 +101,8 @@ public class RegisterWhileCheckoutCase {
     By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        boolean visible = driver.findElement(homeCheck).isDisplayed();
+        logger.info("Home section visibility is {}", visible);
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -116,6 +121,7 @@ public class RegisterWhileCheckoutCase {
                 ExpectedConditions.elementToBeClickable(hoverOnFirstProduct));
 //        elementToClick.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        logger.info("Added first product to cart.");
     }
 
     public void goTocontinoueShopping(){
@@ -129,6 +135,7 @@ public class RegisterWhileCheckoutCase {
         WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(continoueShopping));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", continueButton);
+        logger.info("Clicked continue shopping button.");
     }
 
     public void clickOnAddToCartSeconedProduct(){
@@ -144,183 +151,224 @@ public class RegisterWhileCheckoutCase {
         actions.moveToElement(elementToHover).perform();
         elementToClick.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+        logger.info("Added second product to cart.");
     }
 
     public void goToCartPage(){
         WebElement element = driver.findElement(cartButton);
         String value = element.getAttribute("href");
         driver.navigate().to(value);
+        logger.info("Navigated to cart page.");
     }
 
     public void verifyCartPageFun(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        boolean visible = driver.findElement(verifyCartPage).isDisplayed();
+        logger.info("Cart page visibility is {}", visible);
     }
 
     public void ClickOnProcceedToCheckout(){
         WebElement element = driver.findElement(procceedToCheckout);
         String value = element.getAttribute("href");
         driver.navigate().to(value);
+        logger.info("Proceeded to checkout.");
     }
 
     public void ClickOnRegisterORLogin(){
         WebElement element = driver.findElement(registerORLogin);
         String value = element.getAttribute("href");
         driver.navigate().to(value);
+        logger.info("Navigated to register or login page.");
     }
 
     public void setUserName(String userName) {
         driver.findElement(userNameField).sendKeys(userName);
+        logger.info("Set username.");
     }
 
     public void setEmailAddress(String emailAddress) {
         driver.findElement(emailAddressField).sendKeys(emailAddress);
+        logger.info("Set email address.");
     }
 
     public void setSignUpButton() {
         driver.findElement(signUpButton).click();
+        logger.info("Clicked sign up button.");
     }
 
     public void setMr() {
         driver.findElement(Mr).click();
+        logger.info("Selected 'Mr'.");
     }
 
     public void setMrs() {
         driver.findElement(Mrs).click();
+        logger.info("Selected 'Mrs'.");
     }
 
     public void setPassword(String pass) {
         driver.findElement(password).sendKeys(pass);
+        logger.info(" populated password.");
     }
 
     public void setDayDate(String day) {
         Select daySeletor = new Select(driver.findElement(dayDate));
         daySeletor.selectByContainsVisibleText(day);
+        logger.info("Set day date to {}", day);
     }
 
     public void setMonthDate(String month) {
         Select daySeletor = new Select(driver.findElement(monthDate));
         daySeletor.selectByContainsVisibleText(month);
+        logger.info("Set month date to {}", month);
     }
 
     public void setYearDate(String year) {
         Select daySeletor = new Select(driver.findElement(yearDate));
         daySeletor.selectByContainsVisibleText(year);
+        logger.info("Set year date to {}", year);
     }
 
     public void setNewsLetter() {
         driver.findElement(newsLetter).click();
+        logger.info("Toggled newsletter subscription.");
     }
 
     public void setSpecialOffers() {
         driver.findElement(specialOffers).click();
+        logger.info("Toggled special offers.");
     }
 
     public void setFirstName(String fName) {
         driver.findElement(firstName).sendKeys(fName);
+        logger.info("Set first name.");
     }
 
     public void setLastNmae(String lName) {
         driver.findElement(lastNmae).sendKeys(lName);
+        logger.info("Set last name.");
     }
 
     public void setCompanyName(String comName) {
         driver.findElement(companyName).sendKeys(comName);
+        logger.info("Set company name.");
     }
 
     public void setAddressField(String addressText) {
         driver.findElement(addressField).sendKeys(addressText);
+        logger.info("Set address field.");
     }
 
     public void setAddress2Field(String address2Text) {
         driver.findElement(address2Field).sendKeys(address2Text);
+        logger.info("Set address2 field.");
     }
 
     public void setContoryField(String contoryFi) {
         Select selector = new Select(driver.findElement(contoryField));
         selector.selectByContainsVisibleText(contoryFi);
+        logger.info("Selected country {}.", contoryFi);
     }
 
     public void setStateField(String stateFi) {
         driver.findElement(stateField).sendKeys(stateFi);
+        logger.info("Set state field.");
     }
 
     public void setCityField(String cityFi) {
         driver.findElement(cityField).sendKeys(cityFi);
+        logger.info("Set city field.");
     }
 
     public void setZipCode(String zipCodefi) {
         driver.findElement(zipCode).sendKeys(zipCodefi);
+        logger.info("Set zip code.");
     }
 
     public void setMobileNumber(String mobileNumberText) {
         driver.findElement(mobileNumber).sendKeys(mobileNumberText);
+        logger.info("Set mobile number.");
     }
 
     public void setCreateAccountButton() {
         driver.findElement(createAccountButton).click();
+        logger.info("Clicked create account.");
     }
 
     public void verifyNewUserCreated(){
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        boolean visible = driver.findElement(newUserSignUpVisible).isDisplayed();
+        logger.info("New user signup visibility is {}", visible);
     }
 
     public void clickOnCartButton(){
         WebElement element = driver.findElement(cartButtonHome);
         String value = element.getAttribute("href");
         driver.navigate().to(value);
+        logger.info("Clicked cart button on header.");
     }
 
     public void verifyAddressDetails(){
-        System.out.println(driver.findElement(addressDetails).isDisplayed());
+        boolean visible = driver.findElement(addressDetails).isDisplayed();
+        logger.info("Address details visibility is {}", visible);
     }
 
     public void verifyReviewYourOrder(){
-        System.out.println(driver.findElement(reviewYourOrder).isDisplayed());
+        boolean visible = driver.findElement(reviewYourOrder).isDisplayed();
+        logger.info("Review your order section visibility is {}", visible);
     }
 
     public void writeCommentInTextArea(String text){
         driver.findElement(textArea).sendKeys(text);
+        logger.info("Wrote comment in order message area.");
     }
 
     public void clickOnPlaceOrder(){
         driver.findElement(placeOrder).click();
+        logger.info("Clicked place order.");
     }
 
     public void setNameOnCard(String name) {
         driver.findElement(nameOnCard).sendKeys(name);
+        logger.info("Set cardholder name.");
     }
 
     public void setCardNumber(String number) {
         driver.findElement(cardNumber).sendKeys(number);
+        logger.info("Set card number.");
     }
 
     public void setCvc(String cvctext) {
         driver.findElement(cvc).sendKeys(cvctext);
+        logger.info("Set CVC.");
     }
 
     public void setExpirationMonth(String month) {
         driver.findElement(expirationMonth).sendKeys(month);
+        logger.info("Set expiration month.");
     }
 
     public void setExpirationYear(String year) {
         driver.findElement(expirationYear).sendKeys(year);
+        logger.info("Set expiration year.");
     }
 
     public void clickOnPayAndConfirmOrder(){
         driver.findElement(payAndConfirmOrder).click();
+        logger.info("Clicked pay and confirm order.");
     }
 
     public void checkSuccessMessage(){
-        System.out.println(driver.findElement(successMessage).isDisplayed());
+        boolean visible = driver.findElement(successMessage).isDisplayed();
+        logger.info("Success message visibility is {}", visible);
     }
 
     public void clickOnDelete(){
         driver.findElement(delet).click();
+        logger.info("Clicked delete profile/link.");
     }
 
     public void verifyCheckDeleted(){
-        System.out.println(driver.findElement(checkDeleted).isDisplayed());
+        boolean visible = driver.findElement(checkDeleted).isDisplayed();
+        logger.info("Deletion confirmation visibility is {}", visible);
     }
 
 }
