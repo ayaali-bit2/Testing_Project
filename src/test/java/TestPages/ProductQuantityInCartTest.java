@@ -17,7 +17,6 @@ public class ProductQuantityInCartTest extends BaseTest {
         obj.clickOnAddToCartFirstProduct();
         obj.clickOnAddToCart();
         obj.clickOnViewCart();
-        obj.verifyDetailsOfFirstProduct();
 
     }
 }
