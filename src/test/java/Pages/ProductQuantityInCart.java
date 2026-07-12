@@ -54,7 +54,7 @@ public class ProductQuantityInCart {
         // Create Actions instance
         Actions actions = new Actions(driver);
 
-        quantity = "4";
+        quantity = "7";
         // Perform hover and click
         actions.moveToElement(elementToHover).perform();
         elementToHover.clear();
