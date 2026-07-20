@@ -14,10 +14,11 @@ public class ProductQuantityInCartTest extends BaseTest {
         obj.HomeCheck();
         obj.clickOnViewProduct();
         obj.verifyProductDetailIsOpened();
-        obj.clickOnAddToCartFirstProduct();
+
+        String quantity = "4";
+        obj.setProductQuantity(quantity);
         obj.clickOnAddToCart();
         obj.clickOnViewCart();
-        obj.verifyDetailsOfFirstProduct();
-
+        obj.verifyCartQuantity(quantity);
     }
 }
