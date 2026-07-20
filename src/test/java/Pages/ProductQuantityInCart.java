@@ -39,7 +39,7 @@ public class ProductQuantityInCart {
         Assert.assertTrue(driver.findElement(productDetailIsOpened).isDisplayed(), "Product detail page should be displayed");
     }
 
-    public void clickOnAddToCartFirstProduct(String quantity) {
+    public void setProductQuantity(String quantity) {
         WebElement quantityInput = new WebDriverWait(driver, Duration.ofSeconds(15))
                 .until(ExpectedConditions.elementToBeClickable(firstProductQuantity));
         quantityInput.clear();
@@ -58,7 +58,7 @@ public class ProductQuantityInCart {
         element.click();
     }
 
-    public void verifyDetailsOfFirstProduct(String expectedQuantity) {
+    public void verifyCartQuantity(String expectedQuantity) {
         WebElement element = new WebDriverWait(driver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.visibilityOfElementLocated(quantityOfProductInCart));
         String actualQuantity = element.getText().trim();
