@@ -104,5 +104,36 @@ public class ProductPage {
         System.out.println(driver.findElement(relatedSearchProducts).isDisplayed());
     }
 
+    public String getProductNameText() {
+        return driver.findElement(productName).getText();
+    }
+
+    public String getProductCategoryText() {
+        return driver.findElement(productCategory).getText();
+    }
+
+    public String getProductPriceText() {
+        return driver.findElement(productPrice).getText();
+    }
+
+    public String getProductAvailabilityText() {
+        return driver.findElement(productAvailability).getText();
+    }
+
+    public String getProductConditionText() {
+        return driver.findElement(productCondition).getText();
+    }
+
+    public String getProductBrandText() {
+        return driver.findElement(productBrand).getText();
+    }
+
+    public boolean isSearchResultsHeadingVisible() {
+        return driver.findElement(verifySearchedProduct).isDisplayed();
+    }
+
+    public boolean isRelatedSearchProductsVisible() {
+        return driver.findElement(relatedSearchProducts).isDisplayed();
+    }
 
 }
