@@ -27,8 +27,8 @@ public class LoginPageTest extends BaseTest {
         obj = new LoginPage(driver);
         obj.HomeCheck();
         obj.SingInAndSignUpButton();
-        obj.setEmailAddressField("ayaal@gmail.com");
-        obj.setPasswordField("12345679");
+        obj.setEmailAddressField(utils.TestConfig.invalidEmail());
+        obj.setPasswordField(utils.TestConfig.invalidPassword());
         obj.setSignUpButton();
 
 //        obj.checkUserNameBar();

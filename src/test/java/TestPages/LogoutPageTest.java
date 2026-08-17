@@ -21,8 +21,8 @@ public class LogoutPageTest extends BaseTest {
 
         obj.NewUserSignUpVisible();
 
-        obj.setEmailAddressField("ayaali@gmail.com");
-        obj.setPasswordField("123456789");
+        obj.setEmailAddressField(utils.TestConfig.validEmail());
+        obj.setPasswordField(utils.TestConfig.validPassword());
 
         obj.setSignUpButton();
         obj.checkUserNameBar();

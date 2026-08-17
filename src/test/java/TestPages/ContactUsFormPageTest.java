@@ -19,10 +19,10 @@ public class ContactUsFormPageTest extends BaseTest {
 
         obj.checkGetInTouchVisible();
 
-        obj.setNameContact("aya");
-        obj.setEmailContact("ayaali@gmail.com");
-        obj.setSubjectContact("bla bla");
-        obj.setMessageContact("brjhbvejhvbejhbvjbvjhbvjhbjh");
+        obj.setNameContact(utils.TestConfig.contactValue("name"));
+        obj.setEmailContact(utils.TestConfig.contactValue("email"));
+        obj.setSubjectContact(utils.TestConfig.contactValue("subject"));
+        obj.setMessageContact(utils.TestConfig.contactValue("message"));
         obj.setFileContact(utils.TestConfig.contactUploadFile());
 
         obj.clickSubmitButton();
