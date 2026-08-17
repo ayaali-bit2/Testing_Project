@@ -17,7 +17,7 @@ public class TestCasesPage {
     By verifyTestCasesButton = By.cssSelector("#form > div > div.row > div > h2 > b");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void testCasesButtonFun() {
@@ -27,7 +27,7 @@ public class TestCasesPage {
     }
 
     public void verifyTestCasesButtonFun(){
-        System.out.println(driver.findElement(verifyTestCasesButton).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyTestCasesButton).isDisplayed(), "Test cases page is not displayed");
     }
 
 }

@@ -20,11 +20,11 @@ public class HomeSubscriptionPage {
     By submitButtonVerication = By.xpath("//*[@id=\"subscribe\"]");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void verifySubscriptionFun(){
-        System.out.println(driver.findElement(verifySubscription).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifySubscription).isDisplayed(), "Subscription section is not displayed");
     }
 
     public void setEmailVerication(String email){

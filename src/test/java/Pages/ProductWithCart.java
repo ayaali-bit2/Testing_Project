@@ -51,7 +51,7 @@ public class ProductWithCart {
     By verifyCartEmpty = By.xpath("//span[@id=\"empty_cart\"]");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 500);");
 
@@ -116,11 +116,11 @@ public class ProductWithCart {
     }
 
     public void verifyFirstProductAddedToCart(){
-        System.out.println(driver.findElement(firstProductAddedToCart).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(firstProductAddedToCart).isDisplayed(), "First product is not in cart");
     }
 
     public void verifySeconedProductAddedToCart(){
-        System.out.println(driver.findElement(secondProductAddedToCart).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(secondProductAddedToCart).isDisplayed(), "Second product is not in cart");
     }
 
     public void verifyDetailsOfFirstProduct(){
@@ -158,7 +158,7 @@ public class ProductWithCart {
     }
 
     public void checkVerifyCartPage(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyCartPage).isDisplayed(), "Cart page is not displayed");
     }
 
     public void checkDeleteProductFromCart(){
@@ -166,6 +166,6 @@ public class ProductWithCart {
     }
 
     public void checkVerifyCartEmpty(){
-        System.out.println(driver.findElement(verifyCartEmpty).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyCartEmpty).isDisplayed(), "Empty-cart message is not displayed");
     }
 }

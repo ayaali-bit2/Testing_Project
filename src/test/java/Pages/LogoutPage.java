@@ -28,7 +28,7 @@ public class LogoutPage {
     By logoutButton = By.cssSelector("#header > div > div > div > div.col-sm-8 > div > ul > li:nth-child(4) > a");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void SingInAndSignUpButton() {
@@ -38,7 +38,7 @@ public class LogoutPage {
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "Login form is not displayed");
     }
 
     public void setEmailAddressField(String emailAddressFieldtext) {
@@ -54,7 +54,7 @@ public class LogoutPage {
     }
 
     public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+        org.testng.Assert.assertTrue(driver.findElement(usernameInBar).isDisplayed(), "Username is not displayed");
     }
 
     public void logoutButtonFun() {

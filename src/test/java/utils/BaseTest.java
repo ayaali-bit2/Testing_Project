@@ -26,7 +26,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void navigate(){
-        driver.get("https://automationexercise.com/");
+        driver.get(TestConfig.baseUrl());
         driver.manage().window().maximize();
     }
 

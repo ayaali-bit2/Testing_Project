@@ -31,7 +31,7 @@ public class ContactUsFormPage {
     By homeButton = By.cssSelector("#form-section > a");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void contactUsFormButtonFun() {
@@ -41,7 +41,7 @@ public class ContactUsFormPage {
     }
 
     public void checkGetInTouchVisible(){
-        System.out.println(driver.findElement(getInTouchVisible).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(getInTouchVisible).isDisplayed(), "Contact form is not displayed");
     }
 
     public void setNameContact(String name) {
@@ -73,7 +73,7 @@ public class ContactUsFormPage {
     }
 
     public void verifySuccessMessage(){
-        System.out.println(driver.findElement(successMessageContact).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(successMessageContact).isDisplayed(), "Contact success message is not displayed");
     }
 
     public void goHomeButtonFun() {

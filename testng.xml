@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="C:/Users/Aya Ali/IdeaProjects/NTI_Automation_4">
-    <classes>
-        <class name="TestPages.CartSubscriptionPageTest">
-
-
-    </class>
-    </classes>
-    </test><!---->
+<suite name="Testing Project Test Suite" preserve-order="true">
+    <test name="Selenium page-object tests">
+        <packages>
+            <package name="TestPages"/>
+        </packages>
+    </test>
+    <test name="Cucumber features">
+        <classes>
+            <class name="Runner.CucumberTestRunner"/>
+        </classes>
+    </test>
 </suite>

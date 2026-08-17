@@ -32,7 +32,7 @@ public class ProductQuantityInCart {
     By quantityOfProductInCart = By.cssSelector("#product-1 > td.cart_quantity > button");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void clickOnViewProduct(){
@@ -42,7 +42,7 @@ public class ProductQuantityInCart {
     }
 
     public void verifyProductDetailIsOpened(){
-        System.out.println(driver.findElement(productDetailIsOpened).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(productDetailIsOpened).isDisplayed(), "Product detail page is not displayed");
     }
 
     public void clickOnAddToCartFirstProduct(){

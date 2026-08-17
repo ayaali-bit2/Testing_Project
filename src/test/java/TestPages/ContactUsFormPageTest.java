@@ -23,7 +23,7 @@ public class ContactUsFormPageTest extends BaseTest {
         obj.setEmailContact("ayaali@gmail.com");
         obj.setSubjectContact("bla bla");
         obj.setMessageContact("brjhbvejhvbejhbvjbvjhbvjhbjh");
-        obj.setFileContact("C:/Users/Aya Ali/OneDrive/Desktop/Ahmed-Ali final-cv.pdf");
+        obj.setFileContact(utils.TestConfig.contactUploadFile());
 
         obj.clickSubmitButton();
 

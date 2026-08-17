@@ -43,7 +43,7 @@ public class RegisterWhileCheckoutCase {
     By signUpButton = By.cssSelector("#form > div > div > div:nth-child(3) > div > form > button");
 
 
-    By Mr = By.cssSelector("##id_gender1");
+    By Mr = By.cssSelector("#id_gender1");
     By Mrs = By.cssSelector("#id_gender2");
 
     By password = By.cssSelector("#password");
@@ -97,7 +97,7 @@ public class RegisterWhileCheckoutCase {
     By checkDeleted = By.cssSelector("#form > div > div > div > h2 > b");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void clickOnAddToCartFirstProduct(){
@@ -154,7 +154,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCartPageFun(){
-        System.out.println(driver.findElement(verifyCartPage).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyCartPage).isDisplayed(), "Cart page is not displayed");
     }
 
     public void ClickOnProcceedToCheckout(){
@@ -262,7 +262,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyNewUserCreated(){
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "Logged-in user is not displayed");
     }
 
     public void clickOnCartButton(){
@@ -272,11 +272,11 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyAddressDetails(){
-        System.out.println(driver.findElement(addressDetails).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(addressDetails).isDisplayed(), "Address details are not displayed");
     }
 
     public void verifyReviewYourOrder(){
-        System.out.println(driver.findElement(reviewYourOrder).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(reviewYourOrder).isDisplayed(), "Review order section is not displayed");
     }
 
     public void writeCommentInTextArea(String text){
@@ -312,7 +312,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void checkSuccessMessage(){
-        System.out.println(driver.findElement(successMessage).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(successMessage).isDisplayed(), "Payment success message is not displayed");
     }
 
     public void clickOnDelete(){
@@ -320,7 +320,7 @@ public class RegisterWhileCheckoutCase {
     }
 
     public void verifyCheckDeleted(){
-        System.out.println(driver.findElement(checkDeleted).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(checkDeleted).isDisplayed(), "Account deletion message is not displayed");
     }
 
 }
