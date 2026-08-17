@@ -25,12 +25,12 @@ public class LoginSteps {
 
     @And("enter incorrect email")
     public void enterEmail(){
-        obj.setEmailAddressField("batta200@gmail.com");
+        obj.setEmailAddressField(utils.TestConfig.invalidEmail());
     }
 
     @And("enter incorrect password")
     public void enterPassword(){
-        obj.setPasswordField("asdf");
+        obj.setPasswordField(utils.TestConfig.invalidPassword());
     }
 
     @And("click on login button")

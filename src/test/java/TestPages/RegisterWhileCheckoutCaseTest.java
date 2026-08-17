@@ -47,7 +47,7 @@ public class RegisterWhileCheckoutCaseTest extends BaseTest {
         obj.ClickOnProcceedToCheckout();
         obj.verifyAddressDetails();
         obj.verifyReviewYourOrder();
-        obj.writeCommentInTextArea("jrkgnerjknrjk");
+        obj.writeCommentInTextArea(utils.TestConfig.checkoutValue("comment"));
         obj.clickOnPlaceOrder();
 
         obj.setNameOnCard("mody");

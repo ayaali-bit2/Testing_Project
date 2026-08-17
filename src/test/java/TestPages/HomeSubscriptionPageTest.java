@@ -15,7 +15,7 @@ public class HomeSubscriptionPageTest extends BaseTest {
 
         obj.HomeCheck();
         obj.verifySubscriptionFun();
-        obj.setEmailVerication("aya@gmail.com");
+        obj.setEmailVerication(utils.TestConfig.subscriptionEmail());
         obj.clickOnSubmitButtonVerication();
 
 
