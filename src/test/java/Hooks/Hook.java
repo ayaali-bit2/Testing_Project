@@ -18,7 +18,7 @@ public class Hook {
         options.addArguments("--ignore-certificate-errors");
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
-        driver.get("https://automationexercise.com/");
+        driver.get(utils.TestConfig.baseUrl());
         driver.manage().window().maximize();
     }
 

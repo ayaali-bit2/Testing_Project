@@ -67,6 +67,29 @@ mvn clean compile
 └── ...
 ```
 
+## Externalized Test Data
+
+Common test inputs are stored in `src/test/resources/test-data.properties`. Test classes and
+Cucumber step definitions read these values through `utils.TestConfig`, so changing a dataset
+does not require changing Java code.
+
+The supported groups include login credentials, existing-user registration, checkout
+registration/address/payment data, subscription and contact form values, and product search
+data. Values can be overridden for a local or CI environment with a JVM system property or
+an upper-case underscore environment variable:
+
+```bash
+mvn test \
+  -Dlogin.valid.email=test-user@example.com \
+  -Dlogin.valid.password="$TEST_PASSWORD" \
+  -Dcheckout.email=checkout-user@example.com
+```
+
+For example, `checkout.email` can also be supplied as `CHECKOUT_EMAIL`. Do not commit real
+credentials or payment data; use local overrides or CI secrets for environment-specific values.
+When adding a new common dataset, add its property and a named accessor in `TestConfig`, then
+consume that accessor from tests or step definitions.
+
 ## Running Tests
 
 Execute all tests (including Cucumber features):

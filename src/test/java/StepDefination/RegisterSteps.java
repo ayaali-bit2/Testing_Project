@@ -30,12 +30,12 @@ public class RegisterSteps {
 
     @And("enter username")
     public void setUserName(){
-        obj.setUserName("batta");
+        obj.setUserName(utils.TestConfig.existingUsername());
     }
 
     @And("enter email")
     public void setUserEmail(){
-        obj.setEmailAddress("batta2002@gmail.com");
+        obj.setEmailAddress(utils.TestConfig.existingEmail());
     }
 
     @And("click on signUp button")

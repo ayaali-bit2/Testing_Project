@@ -39,7 +39,7 @@ public class ProductPage {
     By relatedSearchProducts = By.xpath("/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[1]/div[1]/p");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void productsButtonFun() {
@@ -49,11 +49,11 @@ public class ProductPage {
     }
 
     public void verifyProductsButtonFun(){
-        System.out.println(driver.findElement(verifyProductsButton).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyProductsButton).isDisplayed(), "Products heading is not displayed");
     }
 
     public void verifyProductsVisableFun(){
-        System.out.println(driver.findElement(verifyProductsListVisable).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyProductsListVisable).isDisplayed(), "Products list is not displayed");
     }
 
     public void clickOnViewProductFun(){
@@ -63,7 +63,7 @@ public class ProductPage {
     }
 
     public void checkNavigationIntoRightProductFun(){
-        System.out.println(driver.findElement(checkNavigationIntoRightProduct).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(checkNavigationIntoRightProduct).isDisplayed(), "Product details are not displayed");
     }
 
     public void checkDetailsOfFirstProduct(){
@@ -97,11 +97,11 @@ public class ProductPage {
     }
 
     public void verifySearchedProductFun(){
-        System.out.println(driver.findElement(verifySearchedProduct).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifySearchedProduct).isDisplayed(), "Search results are not displayed");
     }
 
     public void getRelatedSearchProductsFun(){
-        System.out.println(driver.findElement(relatedSearchProducts).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(relatedSearchProducts).isDisplayed(), "Related search products are not displayed");
     }
 
 

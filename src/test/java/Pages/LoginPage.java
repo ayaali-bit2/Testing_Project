@@ -31,7 +31,7 @@ public class LoginPage {
 
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void SingInAndSignUpButton() {
@@ -53,7 +53,7 @@ public class LoginPage {
     }
 
     public void checkUserNameBar(){
-        driver.findElement(usernameInBar).isDisplayed();
+        org.testng.Assert.assertTrue(driver.findElement(usernameInBar).isDisplayed(), "Username is not displayed");
     }
 
     public void deleteButton() {
@@ -63,11 +63,11 @@ public class LoginPage {
     }
 
     public void checkIsDeleted(){
-        driver.findElement(checkDeleted).isDisplayed();
+        org.testng.Assert.assertTrue(driver.findElement(checkDeleted).isDisplayed(), "Account deletion message is not displayed");
     }
 
     public void checkInValidLoginMessageVisability(){
-        driver.findElement(InvalidLoginMessage).isDisplayed();
+        org.testng.Assert.assertTrue(driver.findElement(InvalidLoginMessage).isDisplayed(), "Invalid-login message is not displayed");
     }
 
 

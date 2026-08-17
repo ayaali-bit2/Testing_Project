@@ -24,7 +24,7 @@ public class CartSubscriptionPage {
 
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void clickOnCartButton(){
@@ -36,7 +36,7 @@ public class CartSubscriptionPage {
 
     }
     public void verifySubscriptionFun(){
-        System.out.println(driver.findElement(verifySubscription).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifySubscription).isDisplayed(), "Subscription section is not displayed");
     }
 
     public void setEmailVerication(String email){

@@ -15,7 +15,7 @@ public class CartSubscriptionPageTest extends BaseTest {
         obj.HomeCheck();
         obj.clickOnCartButton();
         obj.verifySubscriptionFun();
-        obj.setEmailVerication("ayaali@gmail.com");
+        obj.setEmailVerication(utils.TestConfig.subscriptionEmail());
         obj.clickOnCartButton();
         obj.clickOnSubmitButtonVerication();
     }

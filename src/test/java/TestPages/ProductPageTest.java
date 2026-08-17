@@ -35,7 +35,7 @@ public class ProductPageTest extends BaseTest {
 
         obj.verifyProductsVisableFun();
 
-        obj.addValueToSearchBar("Blue Top");
+        obj.addValueToSearchBar(utils.TestConfig.productSearch());
         obj.clickOnSearchButton();
 
         obj.verifySearchedProductFun();

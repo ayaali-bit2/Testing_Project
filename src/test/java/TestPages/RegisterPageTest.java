@@ -60,8 +60,8 @@ public class RegisterPageTest extends BaseTest {
 
         obj.NewUserSignUpVisible();
 
-        obj.setUserName("Aya");
-        obj.setEmailAddress("ayaali@gmail.com");
+        obj.setUserName(utils.TestConfig.existingUsername());
+        obj.setEmailAddress(utils.TestConfig.existingEmail());
         obj.setSignUpButton();
 
         obj.registerWithExistedUser();

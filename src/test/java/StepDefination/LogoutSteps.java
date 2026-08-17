@@ -24,12 +24,12 @@ public class LogoutSteps {
 
     @And("enter correct email")
     public void setEmail(){
-        obj.setEmailAddressField("ayaali@gmail.com");
+        obj.setEmailAddressField(utils.TestConfig.validEmail());
     }
 
     @And("enter correct password")
     public void setPassword(){
-        obj.setPasswordField("123456789");
+        obj.setPasswordField(utils.TestConfig.validPassword());
     }
 
     @And("click on login button logout")

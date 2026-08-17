@@ -33,7 +33,7 @@ public class RegisterPage  {
     By enterAccountInformation = By.cssSelector("#form > div > div > div > div.login-form > h2 > b");
 
 
-    By Mr = By.cssSelector("##id_gender1");
+    By Mr = By.cssSelector("#id_gender1");
     By Mrs = By.cssSelector("#id_gender2");
 
     By password = By.cssSelector("#password");
@@ -69,7 +69,7 @@ public class RegisterPage  {
     By continueButtin = By.cssSelector("#form > div > div > div > div > a");
 
     public void HomeCheck() {
-        System.out.println(driver.findElement(homeCheck).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(homeCheck).isDisplayed(), "Home page is not displayed");
     }
 
     public void SingInAndSignUpButton() {
@@ -79,7 +79,7 @@ public class RegisterPage  {
     }
 
     public void NewUserSignUpVisible() {
-        System.out.println(driver.findElement(newUserSignUpVisible).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(newUserSignUpVisible).isDisplayed(), "Sign-up form is not displayed");
     }
 
     public void setUserName(String userName) {
@@ -98,7 +98,7 @@ public class RegisterPage  {
     }
 
     public void setEnterAccountInformation() {
-        System.out.println(driver.findElement(enterAccountInformation).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(enterAccountInformation).isDisplayed(), "Account information form is not displayed");
     }
 
     public void setMr() {
@@ -182,11 +182,11 @@ public class RegisterPage  {
     }
 
     public void registerWithExistedUser(){
-        driver.findElement(alreadyExistedUser).isDisplayed();
+        org.testng.Assert.assertTrue(driver.findElement(alreadyExistedUser).isDisplayed(), "Existing-account message is not displayed");
     }
 
     public void verifyAccountCreatedFun(){
-        System.out.println(driver.findElement(verifyAccountCreated).isDisplayed());
+        org.testng.Assert.assertTrue(driver.findElement(verifyAccountCreated).isDisplayed(), "Account-created message is not displayed");
     }
 
     public void clickOnContinueButton(){
