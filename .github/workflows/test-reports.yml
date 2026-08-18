@@ -1,0 +1,56 @@
+name: Test reports
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Run Maven tests
+        run: mvn --batch-mode test
+
+      - name: Install Allure CLI
+        if: always()
+        run: |
+          npm install -g allure-commandline --no-progress
+
+      - name: Generate Allure HTML report
+        if: always()
+        run: allure generate target/allure-results --clean -o target/allure-report
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-artifacts
+          path: |
+            target/allure-results
+            target/allure-report
+            target/screenshots
+            target/surefire-reports
+          if-no-files-found: warn
+          retention-days: 14
