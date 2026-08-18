@@ -89,6 +89,7 @@ public class RegisterWhileCheckoutCase {
     By expirationYear = By.cssSelector("#payment-form > div:nth-child(4) > div:nth-child(3) > input");
 
     By payAndConfirmOrder = By.cssSelector("#submit");
+    By paymentForm = By.cssSelector("#payment-form");
 
     By successMessage = By.cssSelector("#success_message > div");
 
@@ -102,19 +103,16 @@ public class RegisterWhileCheckoutCase {
 
     public void clickOnAddToCartFirstProduct(){
         WebElement elementToHover = driver.findElement(selectFirstProduct);
-
-        // Find the element to click (can be the same or revealed after hover)
         WebElement elementToClick = driver.findElement(hoverOnFirstProduct);
 
-        // Create Actions instance
         Actions actions = new Actions(driver);
-
-        // Perform hover and click
         actions.moveToElement(elementToHover).perform();
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement element = wait.until(
                 ExpectedConditions.elementToBeClickable(hoverOnFirstProduct));
-//        elementToClick.click();
+        element.click();
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
@@ -309,6 +307,21 @@ public class RegisterWhileCheckoutCase {
 
     public void clickOnPayAndConfirmOrder(){
         driver.findElement(payAndConfirmOrder).click();
+    }
+
+    public boolean isPaymentFormValid() {
+        return (Boolean) ((JavascriptExecutor) driver).executeScript(
+                "return document.querySelector('#payment-form').checkValidity();");
+    }
+
+    public boolean isPaymentFormDisplayed() {
+        return driver.findElement(paymentForm).isDisplayed();
+    }
+
+    public boolean isFieldInvalid(String selector) {
+        return (Boolean) ((JavascriptExecutor) driver).executeScript(
+                "return !document.querySelector(arguments[0]).checkValidity();",
+                selector);
     }
 
     public void checkSuccessMessage(){
