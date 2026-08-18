@@ -6,6 +6,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import io.cucumber.java.Scenario;
+import utils.FailureScreenshotUtil;
 
 public class Hook {
 
@@ -20,6 +22,13 @@ public class Hook {
         driver = new ChromeDriver(options);
         driver.get("https://automationexercise.com/");
         driver.manage().window().maximize();
+    }
+
+    @After
+    public void captureFailure(Scenario scenario){
+        if (scenario.isFailed()) {
+            FailureScreenshotUtil.capture(driver, scenario.getName());
+        }
     }
 
     @After

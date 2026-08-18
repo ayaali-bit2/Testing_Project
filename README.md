@@ -83,13 +83,35 @@ mvn test -DsuiteXmlFile=testng.xml
 
 ## Generating Reports
 
-After test execution, generate and serve Allure reports:
+Test execution writes all report inputs beneath `target/`:
+
+- Allure result files: `target/allure-results`
+- Failure screenshots: `target/screenshots`
+- Surefire reports: `target/surefire-reports`
+- Generated HTML report: `target/allure-report`
+
+Generate and open an Allure report locally with the Allure command-line tool:
 
 ```bash
-mvn allure:serve
+mvn test
+allure generate target/allure-results --clean -o target/allure-report
+allure open target/allure-report
 ```
 
-This will open the report in your default browser.
+The `FailureScreenshotListener` captures screenshots automatically for failed or skipped
+TestNG tests. Cucumber failures are captured by the Cucumber hook before the browser is
+closed. Screenshots are both saved under `target/screenshots` and attached to the Allure
+result.
+
+To keep local and CI output consistent, do not commit the `target/` directory. The
+GitHub Actions workflow uploads Allure results, generated HTML, screenshots, and Surefire
+reports as the `test-report-artifacts` workflow artifact, including when tests fail.
+
+For a clean run:
+
+```bash
+mvn clean test
+```
 
 ## Contributing
 

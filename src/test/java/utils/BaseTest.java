@@ -8,7 +8,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
+@Listeners(FailureScreenshotListener.class)
 public class BaseTest {
 
     protected WebDriver driver;
@@ -28,6 +30,10 @@ public class BaseTest {
     public void navigate(){
         driver.get("https://automationexercise.com/");
         driver.manage().window().maximize();
+    }
+
+    public WebDriver getDriver() {
+        return driver;
     }
 
     @AfterMethod
